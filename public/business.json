@@ -1,0 +1,12 @@
+[
+    {
+        "id" : 1,
+        "name": "Vans Store Paris Bastille",
+        "description": "Chaussures, Vêtements et plus encore à Paris",
+        "contact info" :{
+            "adress":"24 Faubourg Saint Antoine, Paris, 75012",
+            "phone":"01 44 68 43 90"
+        },
+        "category":"clothes"
+    }
+]
