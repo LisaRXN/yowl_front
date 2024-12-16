@@ -1,11 +1,15 @@
+import { useSelector } from "react-redux"
+
 export function ReviewCardUser({review}){
+
+  const server = useSelector((state)=>state.server.value)
 
 
     return(
         <div className="flex gap-2 pb-2 min-w-1/2">
         <div className="h-[80px] w-[80px] overflow-hidden rounded-md">
           <img
-            src={review.avatar}
+            src={`${server}${review.avatar}`}
             className="object-contain h-fit w-fit"
           ></img>
         </div>

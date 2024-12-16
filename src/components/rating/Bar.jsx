@@ -1,6 +1,6 @@
 export function Bar({number, count}) {
   
-
+    
     return (
     <div className="flex items-center gap-2 ">
       <span className="block text-sm font-medium ">{number} </span>

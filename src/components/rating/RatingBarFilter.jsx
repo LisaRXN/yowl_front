@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setReviews } from "../../store/reviewsSlice"
+import { useSelector } from "react-redux";
 import { BarFilter } from "./BarFilter";
 
 export function RatingBarFilter({setReviewsFiltered}) {
 
-  const reviews = useSelector((state) => state.reviews.value);
+  const reviews = useSelector((state) => state.reviews?.value || []);
+
 
   const total = reviews.length
   const count_1 = (reviews.filter(review => review.rating === 1).length/total)*100;
@@ -13,17 +13,30 @@ export function RatingBarFilter({setReviewsFiltered}) {
   const count_3 = (reviews.filter(review => review.rating === 3).length/total)*100;
   const count_4 = (reviews.filter(review => review.rating === 4).length/total)*100;
   const count_5 = (reviews.filter(review => review.rating === 5).length/total)*100;
+  
+  const [isChecked, setIschecked]=useState([])
 
   const handleReviews = (e) => {
-    const rating = e.currentTarget.name;
     const checked = e.target.checked;
+    const rating = parseInt(e.target.name)
 
     if (checked) {
-      const reviewsFilter = reviews.filter(review => review.rating === parseInt(rating));
-      setReviewsFiltered(reviewsFilter)
+      setIschecked(prevState => {
+        const updatedState = [...prevState, rating ];
+        const reviewsFilter = reviews.filter(review => updatedState.includes(review.rating));
+        setReviewsFiltered(reviewsFilter);
+        return updatedState;
+      });
+
     } else {
-      setReviewsFiltered(reviews)
+      setIschecked(prevState => {
+        const updatedState = prevState.filter(item => item !== rating);
+        const reviewsFilter = reviews.filter(review => updatedState.includes(review.rating));
+        reviewsFilter.length>0 ? setReviewsFiltered(reviewsFilter) : setReviewsFiltered(reviews)
+        return updatedState;
+      });
     }
+
   };
 
   return (
@@ -39,3 +52,10 @@ export function RatingBarFilter({setReviewsFiltered}) {
     </div>
   );
 }
+
+
+
+
+
+
+

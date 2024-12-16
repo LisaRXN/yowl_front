@@ -1,20 +1,50 @@
-import { Categories } from "../components/Categories";
+import { useEffect, useState } from "react";
+import { CategoriesCard } from "../components/categories/CategoriesCard";
+import axios from "axios";
+import { CategoryCard } from "../components/categories/CategoryCard";
 
-export function Categories_page(){
+export function Categories_page() {
+  const [categories, setCategories] = useState(null);
 
+  const fetchCategories = () => {
+    axios
+      .get(`http://localhost:3000/api/categories`)
+      .then((response) => {
+        if (response.data.results) {
+          setCategories(response.data.results);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
-    return(
+  
+return (
+    categories && (
+        <div className="flex py-20 px-10 gap-5 flex-wrap items-center justify-center">
 
-        <div className="flex flex-col p-20">
-            <h1>All Categories</h1>
-            <Categories/>
-        </div>
-
-
-
-
+        {categories.map( (category,index) =>(
+        <CategoryCard key={index} category={category}/>
+        ))}
+      </div>
     )
-
+  );
 
 }
+
+
+// return (
+
+//       <div className="flex flex-col p-10">
+//         <CategoriesCard />
+//     </div>
+  
+// )
+
+
+
+
+

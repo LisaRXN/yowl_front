@@ -5,21 +5,28 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ReviewCardUser } from "./ReviewCardUser";
 import { ReviewCardLikes } from "./ReviewCardLikes";
+import { ReviewComment } from "./ReviewComment";
+import { CommentCreate } from "../comments/CommentCreate";
+import { formatDate } from "../../utils/formatDate";
 
 export function ReviewsCard({ business_id, review }) {
   const [comment, setComment] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [comments_count, setComments_count] = useState(0);
+  const [hasComment, setHascomment] = useState(false);
+  const [openComment, setOpencomment] = useState();
   const [likes, setLikes] = useState("");
   const [hasLiked, setHasLiked] = useState(false);
   const [dislikes, setDislikes] = useState("");
   const [hasDisliked, setHasDisliked] = useState(false);
   const [isLikeCreated, setIsLikeCreated] = useState(false);
-  const user_id = useSelector((state) => state.user.value.id);
-  const review_id = review.review_id
-  const dispatch = useDispatch();
+  const user_id = useSelector((state) => state.user.value?.id);
+  const user = useSelector((state) => state.user.value);
+  const review_id = review.review_id;
+  const token = useSelector((state) => state.user?.token);
+  const dispatch = useDispatch()
 
 
-
-  const handleComment = () => setComment();
 
   const updateReviewsInRedux = () => {
     axios
@@ -28,7 +35,9 @@ export function ReviewsCard({ business_id, review }) {
       .catch((err) => console.log(err));
   };
 
+
   const isLikeInDatabase = () => {
+    if(user_id){
     axios
       .get(
         `http://localhost:3000/api/likes/get_likes_user_review/${user_id}/${review_id}`
@@ -39,23 +48,57 @@ export function ReviewsCard({ business_id, review }) {
         }
       })
       .catch((err) => console.log(err));
+    }
   };
 
   const reviewIsLiked = () => {
+    if(user_id){
     axios
       .get(
         `http://localhost:3000/api/likes/get_likes_user/${user_id}/${review_id}`
       )
       .then((response) => {
-        if (response.data.results && response.data.results.length > 0) {
+        if (response.data.results[0].is_liked) {
           setHasLiked(response.data.results[0].is_liked);
-          setHasDisliked(response.data.results[0].is_disliked);
-
-
         }
       })
       .catch((err) => console.log(err));
+    }
   };
+
+
+  const reviewIsCommented = () => {
+    if(user_id){
+    axios
+      .get(
+        `http://localhost:3000/api/comments/get_comment_user_review/${user_id}/${review_id}`
+      )
+      .then((response) => {
+        if (response.data.results.length > 0) {
+          setHascomment(true);
+        }
+      })
+      .catch((err) => console.log(err));
+    }
+  };
+
+
+
+
+  const fetchComments = () => {
+    axios
+    .get(`http://localhost:3000/api/comments/get_comments_review/${review_id}`)
+    .then((response) => {
+      if (response.data.results && response.data.results.length > 0) {
+        setComments(response.data.results);
+        setComments_count(response.data.results.length)
+      }else{
+        console.log("Aucun commentaire trouvé.");
+      }
+    })
+    .catch((err) => console.log(err));
+
+  }
 
   const likes_count = () => {
     axios
@@ -68,11 +111,15 @@ export function ReviewsCard({ business_id, review }) {
       .catch((err) => console.log(err));
   };
 
+
+
   useEffect(() => {
     updateReviewsInRedux();
     reviewIsLiked();
     likes_count();
     isLikeInDatabase();
+    fetchComments();
+    reviewIsCommented()
   }, [business_id, user_id]);
 
 
@@ -81,8 +128,6 @@ export function ReviewsCard({ business_id, review }) {
     const url = isLikeCreated
       ? `http://localhost:3000/api/likes/update`
       : "http://localhost:3000/api/likes/create";
-  
-      console.log("URL de la requête :", url);
 
     axios
       .post(url, {
@@ -96,7 +141,7 @@ export function ReviewsCard({ business_id, review }) {
         reviewIsLiked();
         likes_count();
         setHasLiked(!hasLiked);
-        setIsLikeCreated(true)
+        setIsLikeCreated(true);
       })
       .catch((err) => {
         console.error("Erreur lors de la création du like:", err);
@@ -104,38 +149,6 @@ export function ReviewsCard({ business_id, review }) {
         setLikes((prev) => (newLikeStatus ? prev - 1 : prev + 1));
       });
   };
-
-
-  // const updateLike = () => {
-  //   const newLikeStatus = !hasLiked;
-
-  //   setHasLiked(newLikeStatus);
-  //   setLikes((prev) => (newLikeStatus ? prev + 1 : prev - 1));
-
-  //   const url = isLikeCreated
-  //     ? `http://localhost:3000/api/likes/update`
-  //     : "http://localhost:3000/api/likes/create"
-
-  //   axios
-  //     .post(url, {
-  //       user_id: user_id,
-  //       review_id: review_id,
-  //       is_liked: newLikeStatus,
-  //       is_disliked: hasDisliked,
-  //     })
-  //     .then(() => {
-  //       console.log("Review updated successfully!");
-  //       reviewIsLiked();
-  //       likes_count();
-  //       setHasLiked(!hasLiked);
-  //     })
-
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setHasLiked(!newLikeStatus);
-  //       setLikes((prev) => (newLikeStatus ? prev - 1 : prev + 1));
-  //     });
-  // };
 
   const updateDislike = () => {
     const newDislikeStatus = !hasDisliked;
@@ -146,7 +159,7 @@ export function ReviewsCard({ business_id, review }) {
     }
 
     setHasDisliked(newDislikeStatus);
-    setDislikes((prev) => (newDislikeStatus ? prev + 1 : prev - 1)); // Incrémente/décrémente les dislikes
+    setDislikes((prev) => (newDislikeStatus ? prev + 1 : prev - 1));
 
     const url = isLikeCreated
       ? `http://localhost:3000/api/likes/update`
@@ -172,29 +185,6 @@ export function ReviewsCard({ business_id, review }) {
       });
   };
 
-  // const handleDislike = async () => {
-  //   const newDislikes = hasDisliked ? dislike - 1 : dislike + 1;
-  //   const newLikes = hasLiked ? like - 1 : like;
-
-  //   setDislike(newDislikes);
-  //   setHasDisliked(!hasDisliked);
-  //   if (hasLiked) {
-  //     setLike(newLikes);
-  //     setHasLiked(false);
-  //   }
-  //   axios
-  //     .put(`http://localhost:3000/api/reviews/likes`, {
-  //       id: review.review_id,
-  //       likes: newLikes,
-  //       dislikes: newDislikes,
-  //     })
-  //     .then(() => {
-  //       console.log("Review updated successfully!");
-  //       updateReviewsInRedux();
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
   return (
     <div className="flex p-5 border-solid border-t-2 w-3/4  ">
       <div className="flex">
@@ -211,47 +201,40 @@ export function ReviewsCard({ business_id, review }) {
                 value={review.rating}
               />
               <span className="font-extralight text-sm">
-                {review.createdAt}
+                {formatDate(review.createdAt)}
               </span>
             </div>
 
             <span className="text-gray-800 font-semibold">{review.title} </span>
             <span className="text-gray-600 font-light">{review.content}</span>
 
-            <ReviewCardLikes
-              handleComment={handleComment}
+            {token &&<ReviewCardLikes
+              handleComment={() => setOpencomment(!openComment)}
               handleLike={updateLike}
               handleDislike={updateDislike}
               hasLiked={hasLiked}
-              comment={comment}
               like={likes}
               dislike={dislikes}
+              comments_count={comments_count}
+              hasComment={hasComment}
             />
+            }
+
+            {openComment && (
+              <div className="flex flex-col gap-5 ">
+                {comments?.map((item, index) => (
+                  <ReviewComment key={index} comment={item} />
+                ))}
+
+                <CommentCreate hasComment={hasComment} comment={comment} user={user} review_id={review_id} fetchComments={fetchComments} setHascomment={setHascomment} />
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// const handleLike = async () => {
-//   const newLike = hasLiked ? like - 1 : like + 1;
-//   const newDislike = hasDisliked ? dislike - 1 : dislike;
-
-//   setLike(newLike);
-//   setDislike(newDislike);
-//   setHasLiked(!hasLiked);
-//   if (hasDisliked) {
-//     setHasDisliked(false);
-//   }
-//   const params = {
-//     "id": review.review_id,
-//     "likes": newLike,
-//     "dislikes": newDislike,
-//   };
-//   await useUpdate("http://localhost:3000/api/reviews/likes", params);
-//   updateReviewsInRedux();
-// };
 
 // const handleDislike = async () => {
 //   const newDislikes = hasDisliked ? dislike - 1 : dislike + 1;
@@ -263,12 +246,15 @@ export function ReviewsCard({ business_id, review }) {
 //     setLike(newLikes);
 //     setHasLiked(false);
 //   }
-
-//   const params = {
-//     "id": review.review_id,
-//     "likes": newLikes,
-//     "dislikes": newDislikes,
-//   };
-//   await useUpdate("http://localhost:3000/api/reviews/likes", params);
-//   updateReviewsInRedux();
+//   axios
+//     .put(`http://localhost:3000/api/reviews/likes`, {
+//       id: review.review_id,
+//       likes: newLikes,
+//       dislikes: newDislikes,
+//     })
+//     .then(() => {
+//       console.log("Review updated successfully!");
+//       updateReviewsInRedux();
+//     })
+//     .catch((err) => console.log(err));
 // };

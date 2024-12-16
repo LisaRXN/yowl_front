@@ -1,7 +1,23 @@
+
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export function Categories() {
+export function CategoriesCard() {
+  // const [categories, setCategories] = useState([])
+
+  // useEffect(() => {
+
+  //   axios
+  //     .get(`http://localhost:3000/api/categories`)
+  //     .then((response) => setCategories(response.data.results))
+  //     .catch((err) => console.log(err));
+  // }, []);
+
+
+
   return (
+    
     <div className="flex py-20 px-10 gap-5 flex-wrap items-center justify-center">
       
       {/* card */}
@@ -24,6 +40,7 @@ export function Categories() {
       </Link>
 
       {/* card */}
+      <Link to="/category/2">
       <div className="flex items-center gap-5 p-10 bg-mygreen2 rounded-2xl min-w-[350px] cursor-pointer">
         <img
           src="/img/category/game2.png"
@@ -39,8 +56,10 @@ export function Categories() {
           </span>
         </div>
       </div>
+      </Link>
 
       {/* card */}
+      <Link to="/category/3">
       <div className="flex items-center gap-5 p-10 bg-slate-200 rounded-2xl min-w-[350px] cursor-pointer">
         <img
           src="/img/category/music.png"
@@ -56,7 +75,9 @@ export function Categories() {
           </span>
         </div>
       </div>
+      </Link>
       {/* card */}
+      <Link to="/category/4">
       <div className="flex items-center gap-5 p-10 bg-mypink2 rounded-2xl min-w-[350px] cursor-pointer">
         <img
           src="/img/category/food1.png"
@@ -72,8 +93,9 @@ export function Categories() {
           </span>
         </div>
       </div>
-
+      </Link>
       {/* card */}
+      <Link to="/category/5">
       <div className="flex items-center gap-5 p-10 bg-myblue2 rounded-2xl min-w-[350px] cursor-pointer">
         <img
           src="/img/category/clothe2.png"
@@ -89,8 +111,9 @@ export function Categories() {
           </span>
         </div>
       </div>
-
+      </Link>
       {/* card */}
+      <Link to="/category/6">
       <div className="flex items-center gap-5 p-10 bg-myviolet2 rounded-2xl min-w-[350px] cursor-pointer">
         <img
           src="/img/category/club.png"
@@ -106,7 +129,9 @@ export function Categories() {
           </span>
         </div>
       </div>
+      </Link>
       {/* card */}
+      <Link to="/category/7">
       <div className="flex items-center gap-5 p-10 bg-mygreen2 rounded-2xl min-w-[350px] cursor-pointer">
         <img
           src="/img/category/nature2.png"
@@ -122,7 +147,9 @@ export function Categories() {
           </span>
         </div>
       </div>
+      </Link>
       {/* card */}
+      <Link to="/category/8">
       <div className="flex items-center gap-5 p-10 bg-slate-200 rounded-2xl min-w-[350px] cursor-pointer">
         <img
           src="/img/category/science.png"
@@ -138,7 +165,9 @@ export function Categories() {
           </span>
         </div>
       </div>
+      </Link>
       {/* card */}
+      <Link to="/category/9">
       <div className="flex items-center gap-5 p-10 bg-mypink2 rounded-2xl min-w-[350px] cursor-pointer">
         <img
           src="/img/category/travel.png"
@@ -154,6 +183,8 @@ export function Categories() {
           </span>
         </div>
       </div>
+      </Link>
+
     </div>
   );
 }

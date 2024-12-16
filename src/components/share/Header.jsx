@@ -17,6 +17,7 @@ export function Header() {
 
   const handleLogout = ()=> {
     dispatch(setLogin(false))
+    navigate("/home")
   }
 
 
@@ -27,14 +28,14 @@ export function Header() {
       </div>
 
       {/* Menu principal */}
-      <nav className={`flex gap-4 ${isMenuOpen ? 'block' : 'hidden'} md:flex font-jost text-myviolet uppercase font-bold`}>
-        <ul className="flex space-x-6">
-          <Link to="/business" className="hover:underlin">Write a review</Link>
+      <nav className={`flex gap-4 ${isMenuOpen ? 'block' : 'hidden'} md:flex font-jost text-slate-700 uppercase font-bold`}>
+        <ul className="flex items-center space-x-6">
+          <Link to="/writereview" className="hover:underlin">Write a review</Link>
           <Link to="/categories" className="hover:underline">Category</Link>
           {login ? 
-            <li><a onClick={handleLogout} className="hover:bg-indigo-800 border-solid py-4 px-8 rounded-full bg-myviolet2 text-white cursor-pointer">Logout</a></li>
+            <li><a onClick={handleLogout} className="hover:bg-indigo-800 border-solid py-4 px-8 rounded-full bg-slate-700 text-white cursor-pointer">Logout</a></li>
           :
-          <li><a href="/login" className="hover:bg-myviolet2 border-solid py-4 px-8 rounded-full bg-myviolet text-white">Login</a></li>
+          <Link to="/auth/login" className="hover:bg-mygreen border-solid py-4 px-8 rounded-full bg-slate-600 text-white">Login</Link>
             }
         </ul>
       </nav>

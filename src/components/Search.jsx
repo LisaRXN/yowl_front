@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { SearchCard } from "./search/SearchCard";
 import { SearchFilters } from "./search/SearchFilters";
@@ -39,7 +40,14 @@ export function Search() {
             </div>
 
             <div className="w-3/4 py-20">
-              <SearchCard business={business} />
+
+            <div className=" flex flex-col gap-20 w-full items-center   ">
+
+            {business.map((b, index) => (
+              <SearchCard key={index} business={b}/>
+            ))}
+
+            </div>
             </div>
           </div>
         </>

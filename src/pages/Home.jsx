@@ -1,7 +1,11 @@
-import { Categories } from "../components/Categories";
+import { useSelector } from "react-redux";
 import { Search } from "../components/Search";
+import { Categories_page } from "./Categories_page";
 
 export function Home() {
+
+  const token = useSelector( (state)=> state.user.token)
+  console.log(token)
 
     return (
       <div className="flex flex-col items-center justify-center p-10 w-full">
@@ -18,7 +22,7 @@ export function Home() {
   
         <Search></Search>
 
-        <Categories/>
+        <Categories_page/>
       </div>
   
       

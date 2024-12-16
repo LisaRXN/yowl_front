@@ -11,7 +11,7 @@ export function ReviewCreate() {
   const [content, setContent] = useState(null);
   const navigate = useNavigate();
   const login = useSelector((state) => state.login.value);
-  const user_id = useSelector((state) => state.user.value.id);
+  const user_id = useSelector((state) => state.user?.value?.id || null);
 
   const date = new Date()
   const serializedDate = date.toISOString()
@@ -22,28 +22,31 @@ export function ReviewCreate() {
   };
 
   const handleLogin = () => {
-    login ? null : navigate("/login");
+    login ? null : navigate("/auth/login");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post(`http://localhost:3000/evaluate/${id}`, {
-        rating,
-        title,
-        content,
-        user_id,
-        createdAt,
-      })
-      .then(() => {
-        console.log("Review sent successfully!");
-        setRating("");
-        setTitle("");
-        setContent("");
-      })
-      .catch((err) => console.log("Error: " + err.message));
-  };
 
+    const url = `http://localhost:3000/api/reviews/${id}`
+    axios
+    .post(url, {
+      rating: rating,
+      title: title,
+      content: content,
+      user_id: user_id,
+    })
+    .then(() => {
+      console.log("Review sent successfully!");
+      setRating("");
+      setTitle("");
+      setContent("");
+    })
+    .catch((err) => {
+      console.log("Error: " + err.message);
+    });
+
+ }
 
   return (
     <div className="flex p-20 py-[100px] gap-20">

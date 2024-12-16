@@ -7,14 +7,14 @@ export function BusinessCard({ business, rating, reviewsNumber, reviews }) {
 
 
   return (
-    <div className="flex  items-center justify-around bg-myviolet2 p-[50px] h-[700px]">
+    <div className="flex  items-center justify-around bg-slate-700 p-[50px] h-[700px]">
       {/* business card */}
       <div className="flex flex-col gap-4 p-20 bg-white w-7/12 h-[500px] rounded-xl shadow-lg">
         <div className="flex ">
           {/* left */}
           <div className="min-w-48 ">
             <div className="h-[150px] w-[150px] rounded-xl shadow">
-              <img className="object-cover" src={business.image}></img>
+              <img className="object-cover" src={`${business.image}.png`}></img>
             </div>
           </div>
           {/* rigtht */}
@@ -32,14 +32,14 @@ export function BusinessCard({ business, rating, reviewsNumber, reviews }) {
         <div className="flex items-center p-5 ">
           <div className="flex flex-col gap-2 min-w-48">
             <span className="text-7xl font-bold">
-              {Math.round(useSelector((state) => state.rating.value)*10)/10}
+              {Math.round(rating*10)/10}
             </span>
             <ReactStars
               edit={false}
               count={5}
               size={24}
               activeColor="#ffd700"
-              value={useSelector((state) => state.rating.value)}
+              value={rating}
             />
             <span>{reviewsNumber} reviews</span>
           </div>
