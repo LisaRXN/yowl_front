@@ -65,7 +65,7 @@ export function Login() {
  
         <LoginInputMail email={email} setEmail={setEmail} />
 
-        <LoginInputPass password={password} setPassword={setPassword} />
+        <LoginInputPass password={password} setPassword={setPassword} placeholder="Password" login="true" />
 
         <LoginButton />
 

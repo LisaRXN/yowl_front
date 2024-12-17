@@ -33,7 +33,7 @@ export function Header() {
           <Link to="/writereview" className="hover:underlin">Write a review</Link>
           <Link to="/categories" className="hover:underline">Category</Link>
           {login ? 
-            <li><a onClick={handleLogout} className="hover:bg-indigo-800 border-solid py-4 px-8 rounded-full bg-slate-700 text-white cursor-pointer">Logout</a></li>
+            <li><a onClick={handleLogout} className="hover:bg-mygreen border-solid py-4 px-8 rounded-full bg-slate-700 text-white cursor-pointer">Logout</a></li>
           :
           <Link to="/auth/login" className="hover:bg-mygreen border-solid py-4 px-8 rounded-full bg-slate-600 text-white">Login</Link>
             }
