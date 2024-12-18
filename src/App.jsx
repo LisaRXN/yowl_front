@@ -17,7 +17,8 @@ import { setServer } from "./store/serverSlice";
 import { Category_single } from "./pages/Category_single";
 import { WriteReview } from "./pages/WriteReview";
 import { CallbackPage } from "./pages/auth/CallbackPage";
-import { ResetPassword } from "./components/auth/ResetPassword";
+import { ResetPassword } from "./pages/auth/ResetPassword"
+import { SendMail } from "./pages/auth/SendMail";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function Main() {
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
+        <Route path="/auth/sendmail" element={<SendMail />} />
         <Route path="/auth/callback" element={<CallbackPage />} />
       </Routes>
     </div>

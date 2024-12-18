@@ -1,60 +1,38 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { LoginTitle } from "./login/LoginTitle";
-import { LoginInputPass } from "./login/LoginInputPass";
-import { LoginInputMail } from "./login/LoginInputMail";
-import { LoginButton } from "./login/LoginButton";
+import { LoginTitle } from "../../components/auth/login/LoginTitle";
+import { LoginInputPass } from "../../components/auth/login/LoginInputPass";
+import { LoginInputMail } from "../../components/auth/login/LoginInputMail";
+import { LoginButton } from "../../components/auth/login/LoginButton";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../../store/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 
-export function ResetPassword() {
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
-  const [login, setLogin] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const dispatch = useDispatch();
+export function SendMail() {
   const navigate = useNavigate();
-
-
-  const verifyToken = () => {
-    axios
-      .post(`http://localhost:3000/api/auth/verifytoken`, {
-        token: token,
-      })
-      .then((response) => {
-        console.log(response.data.results.email);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    verifyToken();
-  }, []);
+  const [email, setEmail] = useState("")
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/resetpassword`, {
+      const response = await fetch(`http://localhost:3000/api/auth/sendtoken`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          password,
-          confirmPassword
+          email
         }),
       });
 
       if (response.ok) {
-        navigate("/auth/login");
+        setEmail("");
+        navigate("/home");
       } else {
-        setPassword("");
-        console.log("Failed to login.");
+        console.log("Failed to send email.");
       }
     } catch (error) {
       console.log("Error: " + error.message);
@@ -62,7 +40,7 @@ export function ResetPassword() {
   };
 
   return (
-    !login && (
+    
         <div className="flex relative items-center min-h-screen py-40 bg-gradient-to-t from-white via-[#f2eafb] to-myviolet2">
         <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: "url('/img/nuage2.jpg')" }}></div>
       
@@ -77,12 +55,10 @@ export function ResetPassword() {
       >
 
         <LoginTitle 
-          title="Reset Your Password"
+          title="Enter your email to reset your password"
           text="" />
  
-        <LoginInputPass password={password} setPassword={setPassword} placeholder="New password" />
-
-        <LoginInputPass password={confirmPassword} setPassword={setConfirmPassword} placeholder="Confirm your password"/>
+        <LoginInputMail email={email} setEmail={setEmail} />
 
         <div className="flex flex-col w-full items-center gap-3">
       
@@ -98,6 +74,6 @@ export function ResetPassword() {
 
       </div>
     </div>
-    )
+
   );
 }

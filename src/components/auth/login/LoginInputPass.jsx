@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function LoginInputPass({password, setPassword, placeholder, login}) {
   return (
     <div className="flex flex-col w-full">
@@ -7,7 +9,6 @@ export function LoginInputPass({password, setPassword, placeholder, login}) {
       </span>
       <input
       type="password"
-      // id="password"
       name="password"
       placeholder={placeholder}
       value={password}
@@ -17,9 +18,9 @@ export function LoginInputPass({password, setPassword, placeholder, login}) {
       />
     </div>
     {login &&
-    <span 
+    <Link to="/auth/sendmail" 
     className="self-end text-sm"
-    >Forgot password?</span>}
+    >Forgot password?</Link>}
 
 
 
