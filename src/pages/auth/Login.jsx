@@ -63,8 +63,8 @@ export function Login() {
           title="Login to your Account"
           text="Welcome back! Select method to log in:" />
  
-        <LoginInputMail email={email} setEmail={setEmail} />
-
+        <LoginInputMail email={email} setEmail={setEmail}/>
+ 
         <LoginInputPass password={password} setPassword={setPassword} placeholder="Password" login="true" />
 
         <LoginButton />

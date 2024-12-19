@@ -1,7 +1,56 @@
 import ReactStars from "react-rating-stars-component";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
-export function ReviewForm({handleSubmit, ratingChanged, setTitle, setContent, handleLogin }){
+export function ReviewForm({ id }){
+
+  const [rating, setRating] = useState(null);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [sendReview, setSendReview]= useState(false)
+  const navigate = useNavigate();
+  const login = useSelector((state) => state.login.value);
+  const user_id = useSelector((state) => state.user?.value?.id || null);
+
+  const date = new Date()
+  const serializedDate = date.toISOString()
+  const createdAt = new Date(serializedDate)
+
+
+  const ratingChanged = (newRating) => {
+    setRating(newRating);
+  };
+
+  const handleLogin = () => {
+    login ? null : navigate("/auth/login");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const url = `http://localhost:3000/api/reviews/${id}`
+    axios
+    .post(url, {
+      rating: rating,
+      title: title,
+      content: content,
+      user_id: user_id,
+    })
+    .then(() => {
+      console.log("Review sent successfully!");
+      setRating(null);
+      setTitle("");
+      setContent("");
+      setSendReview(true)
+    })
+    .catch((err) => {
+      console.log("Error: " + err.message);
+    });
+ }
+
 
     return(
         <form
@@ -23,6 +72,7 @@ export function ReviewForm({handleSubmit, ratingChanged, setTitle, setContent, h
           onChange={ratingChanged}
           size={24}
           activeColor="#ffd700"
+          value={rating}
         />
 
         <label htmlFor="title" className="mt-10 mb-4 text-xl font-jost">
@@ -36,6 +86,7 @@ export function ReviewForm({handleSubmit, ratingChanged, setTitle, setContent, h
           type="text"
           id="title"
           name="title"
+          value={title}
           placeholder="Titre de la review"
           required
         />
@@ -51,17 +102,21 @@ export function ReviewForm({handleSubmit, ratingChanged, setTitle, setContent, h
           id="content"
           name="content"
           rows="5"
+          value={content}
           placeholder="Votre avis ici..."
           required
         ></textarea>
 
+        <div className="flex items-center gap-4 mt-10 ">
         <button
           onClick={handleLogin}
-          className="text-white text-xl mt-10  bg-myviolet rounded-full px-10 py-4 hover:bg-indigo-800 self-end"
+          className="text-white text-xl  bg-myviolet rounded-full px-10 py-4 hover:bg-indigo-800 self-end"
           type="submit"
         >
           Send
         </button>
+        {sendReview && <span className="text-myviolet">Thank you for sharing your opinion!</span>}
+        </div>
       </form>
     )
 }

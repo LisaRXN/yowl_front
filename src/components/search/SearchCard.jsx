@@ -40,7 +40,8 @@ export function SearchCard({ business }) {
           <div className="flex items-center gap-5 ">
             <div className="h-[100px] w-[100px] rounded-md ">
               <img
-                src={`${server}${business.image}`}
+                // src={`${server}${business.image}`}
+                src={business.image}
                 className="h-full w-auto object-cover rounded-md"
               ></img>
             </div>

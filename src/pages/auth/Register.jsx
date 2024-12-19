@@ -15,14 +15,17 @@ export function Register() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [country, setCountry] = useState("");
-  const [avatar, setAvatar] = useState("/img/users/avatar.png");
-  const [preview, setPreview] = useState(null);
+  const [avatar, setAvatar] = useState(null);
+  const [preview, setPreview] = useState("/img/users/avatar.png");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(avatar)
   const handleSubmit = async (e) => {
+    console.log(avatar)
+
     e.preventDefault();
     try {
       const response = await fetch(`http://localhost:3000/api/auth/register`, {
@@ -46,8 +49,7 @@ export function Register() {
         const data = await response.json();
         dispatch(setUser(data.user));
         dispatch(setToken(data.token));
-        dispatch(setLogin(true));
-        navigate("/home");
+        navigate("/auth/login");
       } else {
         setPassword("");
         console.log("Failed to login.");

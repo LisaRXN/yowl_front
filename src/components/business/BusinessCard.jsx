@@ -17,7 +17,8 @@ export function BusinessCard({ business, rating, reviewsNumber, reviews }) {
           {/* top */}
           <div className="min-w-48 ">
             <div className="h-[150px] w-[150px] rounded-xl shadow">
-              <img className="object-cover" src={`${server}${business.image}`}></img>
+              {/* <img className="object-cover" src={`${server}${business.image}`}></img> */}
+              <img className="object-cover" src={business.image}></img>
             </div>
           </div>
           {/* bottom */}

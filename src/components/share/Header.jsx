@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogin } from '../../store/loginSlice';
+import { setToken } from '../../store/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function Header() {
@@ -17,6 +18,7 @@ export function Header() {
 
   const handleLogout = ()=> {
     dispatch(setLogin(false))
+    dispatch(setToken(""))
     navigate("/home")
   }
 
@@ -32,6 +34,8 @@ export function Header() {
         <ul className="flex items-center space-x-6">
           <Link to="/writereview" className="hover:underlin">Write a review</Link>
           <Link to="/categories" className="hover:underline">Category</Link>
+          {login && <Link to="/profile" className="hover:underline">Profile</Link>}
+
           {login ? 
             <li><a onClick={handleLogout} className="hover:bg-mygreen border-solid py-4 px-8 rounded-full bg-slate-700 text-white cursor-pointer">Logout</a></li>
           :
@@ -39,6 +43,8 @@ export function Header() {
             }
         </ul>
       </nav>
+
+
 
       {/* Bouton burger */}
       <button className="md:hidden" onClick={toggleMenu}>

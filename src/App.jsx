@@ -19,6 +19,7 @@ import { WriteReview } from "./pages/WriteReview";
 import { CallbackPage } from "./pages/auth/CallbackPage";
 import { ResetPassword } from "./pages/auth/ResetPassword"
 import { SendMail } from "./pages/auth/SendMail";
+import { Profile } from "./pages/Profile";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function Main() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  dispatch(setServer("http://localhost:3000/"));
+  dispatch(setServer("http://localhost:3000"));
 
   return (
     <div className="bg-slate-100 min-h-screen text-gray-800">
@@ -47,6 +48,7 @@ function Main() {
         <Route path="/category/:id" element={<Category_single />} />
         <Route path="/categories" element={<Categories_page />} />
         <Route path="/writereview" element={<WriteReview />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />

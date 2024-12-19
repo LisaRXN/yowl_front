@@ -1,4 +1,4 @@
-export function LoginInputMail({email, setEmail}) {
+export function LoginInputMail({email, setEmail, placeholder="Email"}) {
   return (
     <div className="relative flex items-center w-full py-1">
       <span className="absolute left-3">
@@ -8,7 +8,7 @@ export function LoginInputMail({email, setEmail}) {
         type="email"
         id="email"
         name="email"
-        placeholder="Email"
+        placeholder={placeholder}
         value={email}
         onChange={(e) => {setEmail(e.target.value);}}
         required
