@@ -22,10 +22,10 @@ export function CategoryCard({category}){
       <img
         src={`/img/category/${category.name}.png`}
         alt=""
-        className="h-[150px] w-[150px]"
+        className=" h-[100px] w-[100px] md:h-[150px] md:w-[150px] "
       />
       <div className="flex flex-col items-start">
-        <span className="font-bold font-poppins upp text-4xl py-2">
+        <span className="font-bold font-poppins text-3xl md:text-4xl py-2 ">
           {categoryName}
         </span>
         <span className=" font-light font-poppins text-slate-600 ">

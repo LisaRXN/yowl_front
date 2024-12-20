@@ -8,6 +8,15 @@ export function CommentCreate({user, review_id, fetchComments, setHascomment}) {
   const [newComment, setNewcomment] = useState('')
   const server = useSelector((state)=> state.server.value)
 
+  let user_avatar;
+  if (user.avatar.startsWith("http")) {
+    user_avatar = user.avatar;
+  } else {
+    user_avatar = server + user.avatar;
+  }
+
+
+
   const handleSubmit = () => {
     axios
       .post(`http://localhost:3000/api/comments/create`, {
@@ -29,7 +38,8 @@ export function CommentCreate({user, review_id, fetchComments, setHascomment}) {
   return (
     <div className="flex items-center gap-4 border-t-2 pt-4">
       <div className="min-h-[35px] min-w-[35px] h-[35px] w-[35px] overflow-hidden rounded-md">
-        <img src={`${server}${user.avatar}`} className="object-cover h-full w-full"></img>
+        {/* <img src={`${server}${user.avatar}`} className="object-cover h-full w-full"></img> */}
+        <img src={user_avatar} className="object-cover h-full w-full"></img>
       </div>
       <input
         type="text"

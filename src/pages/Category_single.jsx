@@ -30,15 +30,16 @@ export function Category_single() {
 
   return business ? (
     
-    <div className="flex flex-col items-center m-auto ">
+    <div className="flex flex-col items-center m-auto">
       
       <CategoryTitle 
       category={business[0].category.toLowerCase() } 
       text={business[0].text } 
       />
 
-      <div className="flex gap-20 w-full px-20">
-        <div className="flex flex-col gap-10 w-1/4 py-20">
+      <div className="flex flex-col md:flex-row md:gap-20 w-full px-5 md:px-20">
+        
+        <div className="flex flex-col gap-10 md:w-1/4 py-10 md:py-20 ">
           <CategoryFilter
             search={business[0].category}
             setBusiness={setBusiness}
@@ -46,8 +47,8 @@ export function Category_single() {
           />
         </div>
 
-        <div className="w-3/4 py-20">
-          <div className=" flex flex-col gap-20 w-full items-center   ">
+        <div className="md:w-3/4 md:py-20 ">
+          <div className=" flex flex-col gap-10 md:gap-20 w-full items-center   ">
             {business.map((b, index) => (
               <SearchCard key={index} business={b} />
             ))}

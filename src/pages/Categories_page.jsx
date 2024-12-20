@@ -24,7 +24,7 @@ export function Categories_page() {
   
 return (
     categories && (
-        <div className="flex py-20 px-10 gap-5 flex-wrap items-center justify-center">
+        <div className="w-full flex p-10 md:py-20 gap-5 flex-wrap items-center justify-center">
 
         {categories.map( (category,index) =>(
         <CategoryCard key={index} category={category}/>

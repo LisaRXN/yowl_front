@@ -4,13 +4,19 @@ export function ReviewCardUser({review}){
 
   const server = useSelector((state)=>state.server.value)
 
+  let user_avatar;
+  if (review.avatar.startsWith("http")) {
+    user_avatar = review.avatar;
+  } else {
+    user_avatar = server + review.avatar;
+  }
 
     return(
         <div className="flex gap-2 pb-2 min-w-1/2">
         <div className="h-[80px] w-[80px] overflow-hidden rounded-md">
           <img
             // src={`${server}${review.avatar}`}
-            src={review.avatar}
+            src={user_avatar}
             className="object-contain h-fit w-fit"
           ></img>
         </div>

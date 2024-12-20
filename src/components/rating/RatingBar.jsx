@@ -13,7 +13,7 @@ export function RatingBar({reviews}) {
 
     <>
     {reviews.length > 0 && 
-      <div className="flex flex-col w-1/2 gap-2">
+      <div className="flex flex-col w-full md:w-1/2 gap-2">
 
       <Bar number="5" count={count_5}/>
       <Bar number="4" count={count_4}/>

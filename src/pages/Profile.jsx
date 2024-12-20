@@ -8,39 +8,55 @@ import { setUser } from "../store/userSlice";
 import { UserReviewsCard } from "../components/profile/userReviewsCard";
 
 export function Profile() {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.value);
-  const server = useSelector((state) => state.server.value);
-  const [firstname, setFirstname] = useState(user.firstname);
-  const [lastname, setLastname] = useState(user.lastname);
-  const [email, setEmail] = useState(user.email);
-  const [country, setCountry] = useState(user.country);
-  const [updated, setUpdated] = useState(false);
-  const [reviews, setReviews] = useState([]);
 
-  const user_name =
-    user.firstname.charAt(0).toUpperCase() + user.firstname.slice(1);
+  const dispatch = useDispatch();
+  const server = useSelector((state) => state.server.value);
+  const user = useSelector((state) => state.user.value);
   const id = user.id;
 
+
+
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
+  const [avatar, setAvatar] = useState(null);
+  const [updated, setUpdated] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [preview, setPreview] = useState(null);
+
+
+  const user_name = firstname.charAt(0).toUpperCase() +firstname.slice(1);
+
   let user_avatar;
-  if (user.avatar.startsWith("http")) {
-    user_avatar = user.avatar;
-  } else {
-    user_avatar = server + user.avatar;
-  }
-  console.log("AVA", user_avatar)
-  const [avatar, setAvatar] = useState(user_avatar || "/img/users/avatar.png");
-  const [preview, setPreview] = useState(user_avatar || "/img/users/avatar.png");
+  if (avatar?.startsWith("http")) {
+    user_avatar = avatar;
+  } else if(avatar?.startsWith("/images") ){
+    user_avatar = server + avatar;
+  } 
+
+  
+  useEffect(() => {
+    fetchUser();
+    fetchReviews();
+  }, []);
+
 
   const fetchUser = () => {
     axios
       .get(`http://localhost:3000/api/users/${user.id}`)
       .then((response) => {
-        console.log(response.data.results);
+        console.log("USER RES", response.data.results);
         dispatch(setUser(response.data.results[0]));
+        setFirstname( response.data.results[0].firstname)
+        setLastname( response.data.results[0].lastname)
+        setEmail(response.data.results[0].email )
+        setCountry(response.data.results[0].country )
+        setAvatar(response.data.results[0].avatar )
       })
       .catch((err) => console.log(err));
   };
+
 
   const fetchReviews = () => {
     axios
@@ -52,10 +68,6 @@ export function Profile() {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    fetchUser();
-    fetchReviews();
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,12 +92,12 @@ export function Profile() {
   };
 
   return (
-    <div className="flex flex-col gap-10 items-start p-10 py-20 justify-start min-h-screen bg-slate-600">
+    <div className="flex flex-col gap-10 items-start p-10 md:py-20 justify-start min-h-screen bg-slate-600">
       <form
         onSubmit={handleSubmit}
         action="/submit-review"
         method="POST"
-        className="w-2/3 max-w-[700px] flex flex-col items-start gap-4"
+        className="md:w-2/3 max-w-[700px] flex flex-col items-start gap-4"
       >
         <div className="py-4">
           <h2 className="self-center font-montserrat font-bold text-4xl text-slate-100 ">{`Hello ${user_name}`}</h2>
@@ -97,7 +109,7 @@ export function Profile() {
         <RegisterUpload
           avatar={avatar}
           setAvatar={setAvatar}
-          preview={preview}
+          preview={user_avatar}
           setPreview={setPreview}
         />
 

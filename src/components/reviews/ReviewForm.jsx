@@ -57,7 +57,7 @@ export function ReviewForm({ id }){
         onSubmit={handleSubmit}
         action="/submit-review"
         method="POST"
-        className="bg-white font-bold flex flex-col w-7/12 m-auto items-start justify-start py-20 px-20 rounded-xl shadow-lg"
+        className="bg-white font-bold flex flex-col w-full md:w-7/12 m-auto items-start justify-start p-10 lg:p-20 rounded-xl shadow-lg"
       >
         <h2 className="self-center bold text-5xl pb-5 text-myviolet font-montserrat">
           Share Now

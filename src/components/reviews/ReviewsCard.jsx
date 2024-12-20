@@ -186,9 +186,10 @@ export function ReviewsCard({ business_id, review }) {
   };
 
   return (
-    <div className="flex p-5 border-solid border-t-2 w-3/4  ">
+    <div className="flex p-5 border-solid border-t-2 md:w-3/4   ">
       <div className="flex">
-        <div className="flex flex-row gap-10">
+        
+        <div className="flex flex-col md:flex-row flex-row gap-5 md:gap-10">
           <ReviewCardUser review={review} />
 
           <div className="flex flex-col gap-2">

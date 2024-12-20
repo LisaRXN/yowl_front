@@ -31,8 +31,9 @@ export function LastReviews({ id }) {
   }, [id]);
 
   return reviews ? (
-    <div className="relative flex flex-col items-center flex-between  bg-slate-200 w-1/2 rounded-r-lg">
-      <div className="relative flex flex-col items-center gap-4 flex-between overflow-y-scroll w-3/4 pt-5">
+    <div className="relative flex flex-col items-center bg-slate-200 w-full h-full rounded-r-lg">
+      
+      <div className="relative flex flex-col items-center gap-4 flex-between overflow-y-scroll w-full px-5 pt-5">
         {reviews.map((review, index) => (
           <div
             onClick={() => navigate(`/business/${review.business_id}`)}
@@ -64,11 +65,12 @@ export function LastReviews({ id }) {
         ))}
       </div>
 
-      <div className="bg-mygreen absolute bottom-0 right-0  w-full flex items-center justify-start gap-3 rounded-br-lg p-5 ">
+      <div className="bg-mygreen absolute bottom-[-1px] right-0  w-full flex items-center justify-start gap-3 rounded-b-lg md:rounded-br-lg p-5 ">
         <img className="w-[20px] h-[20px]" src="/img/icons/eye.png" alt="" />
         <span className="font-bold cursor-pointer ">Last reviews</span>
       </div>
     </div>
+    
   ) : (
     <div>Loading...</div>
   );

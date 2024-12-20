@@ -3,10 +3,12 @@ import { RatingBarFilter } from "./RatingBarFilter";
 
 export function RatingCard({ reviewsNumber, setReviewsFiltered, rating}) {
   return (
-    <div className="flex items-center justify-between  h-[300px]  w-3/4 m-auto ">
-      <div className=" flex items-centergap-10 w-3/4">
-        <div className="flex items-center p-5 w-full ">
-          <div className="flex flex-col gap-2 min-w-48">
+    <div className="flex flex-col md:flex-row items-center justify-between  md:h-[300px]  md:w-3/4 m-auto py-10 md:py-0">
+      
+      <div className=" flex md:items-center gap-10 w-full md:w-3/4">
+      
+        <div className="flex flex-col md:flex-row gap-2 md:gap-0 items-center p-5 w-full ">
+          <div className="flex flex-col gap-2 md:min-w-48">
             <span className="text-7xl font-bold">
               {Math.round(rating * 10) / 10}
             </span>
@@ -22,7 +24,7 @@ export function RatingCard({ reviewsNumber, setReviewsFiltered, rating}) {
           <RatingBarFilter setReviewsFiltered={setReviewsFiltered} />
         </div>
       </div>
-      <h2 className="p-20 text-4xl text-right font-bold font-montserrat leading-normal">
+      <h2 className="p-10 md:p-20 text-4xl text-right font-bold font-montserrat leading-normal">
         Discover <br></br>
         <span className="text-mygreen">YOWL</span> <br></br>Opinions
       </h2>

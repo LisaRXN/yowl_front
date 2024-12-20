@@ -30,8 +30,9 @@ export function Search() {
 
       {business && (
         <>
-          <div className="flex gap-20 w-full py-10 px-5 ">
-            <div className="w-1/4 py-20">
+          <div className=" flex flex-col md:flex-row md:gap-20 w-full md:py-10 md:px-5  ">
+            
+            <div className=" w-full md:w-1/4 py-20">
               <SearchFilters
                 business={business}
                 setBusiness={setBusiness}
@@ -39,9 +40,9 @@ export function Search() {
               />
             </div>
 
-            <div className="w-3/4 py-20">
+            <div className=" w-full md:w-3/4 md:py-20">
 
-            <div className=" flex flex-col gap-20 w-full items-center   ">
+            <div className=" flex flex-col gap-20 w-full items-center ">
 
             {business.map((b, index) => (
               <SearchCard key={index} business={b}/>

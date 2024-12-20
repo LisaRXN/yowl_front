@@ -41,7 +41,7 @@ export function RatingBarFilter({setReviewsFiltered}) {
 
   return (
 
-    <div className="flex flex-col w-1/2 gap-2">
+    <div className="flex flex-col w-full md:w-1/2 gap-2">
 
       <BarFilter number='5' count={Math.round(count_5*10)/10} handleReviews={handleReviews} />
       <BarFilter number='4' count={Math.round(count_4*10)/10} handleReviews={handleReviews} />

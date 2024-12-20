@@ -99,7 +99,7 @@ export function SearchFilters({ business, search, setBusiness }) {
   // };
 
   return (
-    <div className="flex flex-col gap-5 h-[300px] w-full rounded-sm shadow-md">
+    <div className="flex flex-col gap-5 h-[200px] md:h-[300px] w-full rounded-sm shadow-md">
       <span className="font-montserrat font-bold text-white text-xl self-center  bg-slate-700 w-full p-4 rounded-t-sm ">Filters</span>
 
       <div className="flex flex-col gap-4  p-4">

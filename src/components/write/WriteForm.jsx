@@ -96,9 +96,9 @@ export function WriteForm() {
       onSubmit={handleSubmit}
       action="/submit-review"
       method="POST"
-      className="bg-white font-bold flex flex-col w-10/12 m-auto items-start justify-start py-20 px-20 rounded-xl shadow-lg  gap-2"
+      className="bg-white font-bold flex flex-col w-10/12 m-auto items-start justify-start p-5 md:p-20 rounded-xl shadow-lg  gap-2"
     >
-      <h2 className="self-center bold text-5xl pb-5 font-montserrat leading-tight">
+      <h2 className="self-center bold text-4xl md:text-5xl md:pb-5 font-montserrat leading-tight">
         Got something to say? Share your{" "}
         <span className="text-mygreen ">opinion</span> here!
       </h2>
@@ -174,7 +174,7 @@ export function WriteForm() {
       <span className="text-red-600 text-xl">{error}</span>
       <button
         onClick={handleLogin}
-        className="text-white text-xl bg-myviolet rounded-full px-10 py-4 hover:bg-mygreen self-end"
+        className="text-white text-xl bg-myviolet rounded-full px-6 py-3 md:px-10 md:py-4 hover:bg-mygreen self-end"
         type="submit"
       >
         Send

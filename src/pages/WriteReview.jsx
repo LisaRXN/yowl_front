@@ -55,7 +55,7 @@ export function WriteReview() {
 //  }
 
   return (
-    <div className="flex p-20 py-[100px] gap-20">
+    <div className="flex md:p-20 py-[50px] md:py-[100px] gap-20">
       <WriteForm 
  />
       {/* <WriteForm 

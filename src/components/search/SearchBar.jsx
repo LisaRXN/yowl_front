@@ -4,7 +4,7 @@ export function SearchBar({search, handleSearchChange }){
         <div className="flex justify-center p-4">
         <form
           onSubmit={(e) => e.preventDefault()} 
-          className="flex items-center border-gray-300 rounded-full shadow-sm w-[500px] "
+          className="flex items-center border-gray-300 rounded-full shadow-sm md:w-[500px] sm:w-[300px]  "
         >
           <input
             type="text"

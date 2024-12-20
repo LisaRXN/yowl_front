@@ -10,7 +10,7 @@ export function ReviewCardLikes({
   hasComment
 }) {
   return (
-    <div className="flex gap-4 items-center pt-10 pb-2">
+    <div className="flex gap-4 items-center mt-5 md:pt-10 pb-2">
       <div className="flex items-center gap-1">
             <img
             onClick={handleComment}

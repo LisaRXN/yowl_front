@@ -8,10 +8,10 @@ export function CategoryTitle({ category, text }) {
       <img
         src={`/img/category/${category}.png`}
         alt=""
-        className="h-[200px] w-[200px]"
+        className="h-[120px] w-[120px] md:h-[200px] md:w-[200px]"
       />
       <div className="flex flex-col items-start">
-        <span className="font-bold font-poppins upp text-6xl py-4">{categoryTitle}</span>
+        <span className="font-bold font-poppins upp text-4xl md:text-6xl py-4">{categoryTitle}</span>
         <span className=" font-light font-poppins  text-slate-300 text-xl ">
           {text}
         </span>

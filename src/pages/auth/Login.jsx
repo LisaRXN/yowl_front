@@ -14,6 +14,11 @@ export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const googleAuth = ()=> {
+    window.location = "http://localhost:3000/api/passport/auth/google";  // C'est la route où ton backend gère l'authentification Google
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -67,7 +72,7 @@ export function Login() {
  
         <LoginInputPass password={password} setPassword={setPassword} placeholder="Password" login="true" />
 
-        <LoginButton />
+        <LoginButton googleAuth={googleAuth} />
 
         <div className="flex gap-2 items-center justify-center text-slate-800 w-full pt-10 "><span>Don{"'"}t have an account?</span><Link to="/auth/register" className="font-bold">Sign Up</Link></div>
         
