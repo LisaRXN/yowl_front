@@ -27,7 +27,6 @@ export function ReviewsCard({ business_id, review }) {
   const dispatch = useDispatch()
 
 
-
   const updateReviewsInRedux = () => {
     axios
       .get(`http://localhost:3000/api/reviews/${business_id}`)
@@ -58,7 +57,7 @@ export function ReviewsCard({ business_id, review }) {
         `http://localhost:3000/api/likes/get_likes_user/${user_id}/${review_id}`
       )
       .then((response) => {
-        if (response.data.results[0].is_liked) {
+        if (response.data.results[0]?.is_liked) {
           setHasLiked(response.data.results[0].is_liked);
         }
       })
@@ -81,8 +80,6 @@ export function ReviewsCard({ business_id, review }) {
       .catch((err) => console.log(err));
     }
   };
-
-
 
 
   const fetchComments = () => {
@@ -110,7 +107,6 @@ export function ReviewsCard({ business_id, review }) {
       })
       .catch((err) => console.log(err));
   };
-
 
 
   useEffect(() => {
@@ -176,7 +172,6 @@ export function ReviewsCard({ business_id, review }) {
         console.log("Review updated successfully!");
         reviewIsLiked();
         likes_count();
-        // setHasLiked(!hasLiked);
       })
       .catch((err) => {
         console.log(err);
@@ -187,14 +182,15 @@ export function ReviewsCard({ business_id, review }) {
 
   return (
     <div className="flex p-5 border-solid border-t-2 md:w-3/4   ">
-      <div className="flex">
+      <div className="flex w-full">
         
-        <div className="flex flex-col md:flex-row flex-row gap-5 md:gap-10">
+        <div className="flex flex-col md:flex-row flex-row gap-5 md:gap-10 w-full">
           <ReviewCardUser review={review} />
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-2/3">
             <div className="flex gap-4 items-center">
               <ReactStars
+                key = {review_id}
                 edit={false}
                 count={5}
                 size={14}
@@ -202,12 +198,11 @@ export function ReviewsCard({ business_id, review }) {
                 value={review.rating}
               />
               <span className="font-extralight text-sm">
-                {formatDate(review.createdAt)}
+                {formatDate(review?.createdAt)}
               </span>
             </div>
-
-            <span className="text-gray-800 font-semibold">{review.title} </span>
-            <span className="text-gray-600 font-light">{review.content}</span>
+            <span className="text-gray-800 font-semibold">{review?.title} </span>
+            <span className="text-gray-600 font-light">{review?.content}</span>
 
             {token &&<ReviewCardLikes
               handleComment={() => setOpencomment(!openComment)}

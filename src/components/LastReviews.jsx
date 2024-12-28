@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import { useSelector } from "react-redux";
 
@@ -21,7 +21,6 @@ export function LastReviews({ id }) {
 
         const data = await response.json();
         setReviews(data.results);
-        console.log(data.results);
       } catch (error) {
         console.error(error);
       }
@@ -67,7 +66,7 @@ export function LastReviews({ id }) {
 
       <div className="bg-mygreen absolute bottom-[-1px] right-0  w-full flex items-center justify-start gap-3 rounded-b-lg md:rounded-br-lg p-5 ">
         <img className="w-[20px] h-[20px]" src="/img/icons/eye.png" alt="" />
-        <span className="font-bold cursor-pointer ">Last reviews</span>
+        <Link to={`/business/${id}`} className="font-bold cursor-pointer ">Last reviews</Link>
       </div>
     </div>
     

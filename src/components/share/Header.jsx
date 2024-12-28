@@ -1,26 +1,38 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../../store/loginSlice";
-import { setToken } from "../../store/userSlice";
+import { setToken, setUser } from "../../store/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderMobile } from "./HeaderMobile";
+import axios from "axios";
 
 export function Header() {
+ 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const login = useSelector((state) => state.login.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const email = useSelector((state)=>state.user.value?.email)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+
   const handleLogout = () => {
-    dispatch(setLogin(false));
-    dispatch(setToken(""));
-    navigate("/home");
-  };
+    axios
+    .delete(`http://localhost:3000/api/passport/auth/google/${email}`)
+    .then(() => {
+       console.log("user logout successfull");
+        dispatch(setToken(null));
+        dispatch(setUser(null));
+        dispatch(setLogin(false));
+        navigate("/home");    
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
 
   return (
     <header className="bg-white p-4 flex justify-between items-center bg-white pr-5">

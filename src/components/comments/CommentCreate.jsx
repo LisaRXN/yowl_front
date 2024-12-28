@@ -9,13 +9,11 @@ export function CommentCreate({user, review_id, fetchComments, setHascomment}) {
   const server = useSelector((state)=> state.server.value)
 
   let user_avatar;
-  if (user.avatar.startsWith("http")) {
+  if (user?.avatar.startsWith("http")) {
     user_avatar = user.avatar;
-  } else {
+  } else if(user?.avatar.startsWith("/images")){
     user_avatar = server + user.avatar;
   }
-
-
 
   const handleSubmit = () => {
     axios
@@ -39,7 +37,7 @@ export function CommentCreate({user, review_id, fetchComments, setHascomment}) {
     <div className="flex items-center gap-4 border-t-2 pt-4">
       <div className="min-h-[35px] min-w-[35px] h-[35px] w-[35px] overflow-hidden rounded-md">
         {/* <img src={`${server}${user.avatar}`} className="object-cover h-full w-full"></img> */}
-        <img src={user_avatar} className="object-cover h-full w-full"></img>
+        <img src={user_avatar ?  user_avatar : "/img/users/avatar.png"} className="object-cover h-full w-full"></img>
       </div>
       <input
         type="text"

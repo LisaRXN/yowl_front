@@ -6,7 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Home } from "./pages/home";
-import { Review } from "./pages/review";
+// import { Review } from "./pages/review";
 import { Business } from "./pages/Business";
 import Header from "./components/share/Header";
 import { Login } from "./pages/auth/Login";
@@ -44,7 +44,7 @@ function Main() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/business/:id" element={<Business />} />
-        <Route path="/review/:id" element={<Review />} />
+        {/* <Route path="/review/:id" element={<Review />} /> */}
         <Route path="/category/:id" element={<Category_single />} />
         <Route path="/categories" element={<Categories_page />} />
         <Route path="/writereview" element={<WriteReview />} />

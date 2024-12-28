@@ -1,8 +1,7 @@
 import imageCompression from 'browser-image-compression';
 
 export function RegisterUpload({ avatar, setAvatar, preview, setPreview }) {
-  
-
+    
   const handleFileChange = (event) => {
     const file = event.target.files[0];
   

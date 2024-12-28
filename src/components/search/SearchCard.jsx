@@ -11,6 +11,8 @@ export function SearchCard({ business }) {
   const [reviewNumber, setReviewnumber] = useState("");
   const [isLoaded, setIsloaded] = useState(false);
 
+  const categoryTitle = business?.category.charAt(0).toUpperCase() + business?.category.slice(1);
+
 
   let business_image;
   if (business.image.startsWith("http")) {
@@ -70,7 +72,7 @@ export function SearchCard({ business }) {
           </div>
           <div className="flex flex-col ">
             <span>{reviewNumber} reviews</span>
-            {/* <span>{business.category}</span> */}
+            <span>{categoryTitle}</span>
           </div>
           <div className="absolute bottom-0 left-0 bg-myviolet w-full flex items-center justify-start gap-3 p-5 md:rounded-bl-lg">
             <img
@@ -89,56 +91,8 @@ export function SearchCard({ business }) {
 
         {/* right  */}
         <div className="  w-full md:w-1/2 h-1/2 md:h-full ">
-          <LastReviews id={business.id} />
+          <LastReviews id={business?.id} />
         </div>
-
-        {/* <div className="relative flex gap-5 justify-between w-full  ">
-          <div className="flex flex-col p-5  w-1/2 bg-pink-200">
-            <div className="flex items-center gap-5 ">
-              <div className="h-[100px] w-[100px] rounded-md ">
-                <img
-                  // src={`${server}${business.image}`}
-                  src={}
-                  className="h-full w-auto object-cover rounded-md"
-                ></img>
-              </div>
-              <div className="">
-                <Link
-                  className="font-bold text-lg font-jost"
-                  to={`/business/${business.id}`}
-                >
-                  {business.name}
-                </Link>
-                <ReactStars
-                  edit={false}
-                  count={5}
-                  size={24}
-                  activeColor="#ffd700"
-                  value={rating}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col ">
-              <span>{reviewNumber} reviews</span>
-            </div>
-          </div>
-
-          <div className="absolute bottom-0 left-0 bg-myviolet w-full flex items-center justify-start gap-3 p-5 rounded-b-lg">
-            <img
-              className="w-[20px] h-[20px]"
-              src="/img/icons/pencil.png"
-              alt=""
-            />
-            <Link
-              to={`/business/${business.id}`}
-              className="font-bold cursor-pointer text-white "
-            >
-              Write a review
-            </Link>
-          </div>
-
-          <LastReviews id={business.id} />
-        </div> */}
       </div>
     )
   );

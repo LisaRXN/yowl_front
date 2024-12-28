@@ -5,6 +5,7 @@ import { ReviewCreate } from "../components/reviews/ReviewCreate";
 import { ReviewsCard } from "../components/reviews/ReviewsCard";
 import { RatingCard } from "../components/rating/RatingCard";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 export function Business() {
   const { id } = useParams();
@@ -13,10 +14,10 @@ export function Business() {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(null);
   const [reviewsFiltered, setReviewsFiltered] = useState(reviews);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     axios
- 
       .get(`http://localhost:3000/api/business/${id}`)
       .then((response) => setBusiness(response.data.results[0]))
       .catch((err) => console.log(err));
@@ -43,7 +44,7 @@ export function Business() {
     if (reviews.length > 0) {
       setReviewsFiltered(reviews);
     }
-  }, [reviews]);
+  }, [reviews, setReviewsFiltered]);
 
   return business ? (
     <>
@@ -58,13 +59,14 @@ export function Business() {
 
       {reviews.length > 0 && (
         <RatingCard
+          business_id = {business.id}
           reviewsNumber={reviewsNumber}
           setReviewsFiltered={setReviewsFiltered}
           rating={rating}
         />
       )}
 
-      {reviewsFiltered.map((review, index) => (
+      {reviewsFiltered?.map((review, index) => (
         <div
           key={index}
           className="flex flex-col items-center justify-center gap-20 w-full m-auto pb-2 "
@@ -78,7 +80,6 @@ export function Business() {
   );
 }
 
-// useEffect(() => {
 //   const fetchData = async () => {
 //     try {
 //       //business

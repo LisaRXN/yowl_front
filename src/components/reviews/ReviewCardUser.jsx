@@ -12,7 +12,7 @@ export function ReviewCardUser({review}){
   }
 
     return(
-        <div className="flex gap-2 pb-2 min-w-1/2">
+        <div className="flex gap-2 pb-2 w-1/3">
         <div className="h-[80px] w-[80px] overflow-hidden rounded-md">
           <img
             // src={`${server}${review.avatar}`}
@@ -20,7 +20,7 @@ export function ReviewCardUser({review}){
             className="object-contain h-fit w-fit"
           ></img>
         </div>
-        <div className="flex flex-col px-2">
+        <div className="flex flex-col px-2 ">
           <span className="text-gray-800 font-bold font-raleway ">
             {review.firstname} {review.lastname}
           </span>

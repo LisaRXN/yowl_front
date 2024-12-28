@@ -3,7 +3,7 @@ import { WriteUpload } from "./WriteUpload";
 import { useState } from "react";
 import { FormSelect } from "./FormSelect.jsx";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FormInput } from "./FormInput.jsx";
 import { FormLabel } from "./FormLabel.jsx";
@@ -36,14 +36,18 @@ export function WriteForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null)
 
     if (
       !name?.trim() ||
-      !description?.trim() ||
       !title?.trim() ||
       !content?.trim()
     ) {
       setError("Fields cannot be empty or contain only spaces!");
+      return;
+    }
+    if(category === null){
+      setError("Choose a category!");
       return;
     }
 
@@ -65,7 +69,9 @@ export function WriteForm() {
         content: content,
         user_id: user_id,
       })
-      .then(() => {
+      .then((response) => {
+
+        if(response)
         console.log("Review sent successfully!");
         setName("");
         setDescription("");
@@ -84,13 +90,19 @@ export function WriteForm() {
         
       })
       .catch((err) => {
-        console.log("Error: " + err.message);
+        console.log("Error: " + err.message, err.response.data);
+        setError(err.response.data.error)
       });
   };
 
   return (
     <>
-    {success && <span>{success}</span>}
+    {success && 
+    <div className="flex flex-col items-center md:p-20 py-[50px] md:py-[100px] gap-10 bg-pink-200 m-auto">
+     <span className="text-lg">{success}</span>
+     <Link to="/home" className="underline">Back to Home Page</Link>
+    </div>
+    }
     {success===null  &&
     <form
       onSubmit={handleSubmit}

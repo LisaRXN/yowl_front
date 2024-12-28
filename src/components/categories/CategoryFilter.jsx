@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FilterInput } from "../search/FilterInput";
 import axios from "axios";
 
-export function CategoryFilter({ setBusiness, id, search}) {
+export function CategoryFilter({setBusiness, id, search}) {
   const [ratingChecked, setRatingChecked] = useState(false);
   const [reviewsChecked, setReviewsChecked] = useState(false);
 

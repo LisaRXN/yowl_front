@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BarFilter } from "./BarFilter";
 
 export function RatingBarFilter({setReviewsFiltered}) {
 
   const reviews = useSelector((state) => state.reviews?.value || []);
-
 
   const total = reviews.length
   const count_1 = (reviews.filter(review => review.rating === 1).length/total)*100;
