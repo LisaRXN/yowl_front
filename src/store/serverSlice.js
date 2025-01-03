@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: "http://localhost:3000/"
+  // value: "http://localhost:3000/"
+  value: "https://yowl-backend-pgxt.onrender.com"
 };
 
 

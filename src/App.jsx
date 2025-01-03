@@ -6,7 +6,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Home } from "./pages/Home.jsx";
-// import { Review } from "./pages/review";
 import { Business } from "./pages/Business";
 import Header from "./components/share/Header";
 import { Login } from "./pages/auth/Login";
@@ -33,7 +32,8 @@ function Main() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  dispatch(setServer("http://localhost:3000"));
+  // dispatch(setServer("http://localhost:3000"));
+  dispatch(setServer("https://yowl-backend-pgxt.onrender.com"));
 
   return (
     <div className="bg-slate-100 min-h-screen text-gray-800">
