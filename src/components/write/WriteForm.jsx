@@ -25,6 +25,7 @@ export function WriteForm() {
   const [description, setDescription] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSucces] = useState(null);
+  const server = useSelector((state)=>state.server.value)
 
   const ratingChanged = (newRating) => {
     setRating(newRating);
@@ -56,7 +57,7 @@ export function WriteForm() {
       return;
     }
 
-    const url = `http://localhost:3000/api/business`;
+    const url = `${server}}/api/business`;
     axios
       .post(url, {
         name: name,

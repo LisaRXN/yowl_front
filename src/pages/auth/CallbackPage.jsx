@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../store/loginSlice";
@@ -8,11 +8,12 @@ import { useEffect } from "react";
 export function CallbackPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const server = useSelector((state)=>state.server.value)
 
 
   const findUser = (email, token) => {
     axios
-      .put(`http://localhost:3000/api/users/find`, {
+      .put(`${server}/api/users/find`, {
         email,
       })
       .then((response) => {
@@ -35,7 +36,7 @@ export function CallbackPage() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/passport/auth/google/profile")
+      .get(`${server}/api/passport/auth/google/profile`)
       .then((response) => {
         if (response.data.results.length > 0) {
           const email = response.data.results[0].email

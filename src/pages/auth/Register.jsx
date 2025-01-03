@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../store/userSlice";
 import { setLogin } from "../../store/loginSlice";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,6 +21,7 @@ export function Register() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const server = useSelector((state)=>state.server.value)
 
   console.log(avatar)
   const handleSubmit = async (e) => {
@@ -28,7 +29,7 @@ export function Register() {
 
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+      const response = await fetch(`${server}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +62,7 @@ export function Register() {
 
 
   const googleAuth = ()=> {
-    window.location = "http://localhost:3000/api/passport/auth/google";  // C'est la route où ton backend gère l'authentification Google
+    window.location = `${server}/api/passport/auth/google`;  // C'est la route où ton backend gère l'authentification Google
   }
 
   

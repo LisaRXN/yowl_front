@@ -5,7 +5,7 @@ import { LoginTitle } from "../../components/auth/login/LoginTitle";
 import { LoginInputPass } from "../../components/auth/login/LoginInputPass";
 import { LoginInputMail } from "../../components/auth/login/LoginInputMail";
 import { LoginButton } from "../../components/auth/login/LoginButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../store/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -17,11 +17,12 @@ export function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const server = useSelector((state)=>state.server.value)
 
 
   const verifyToken = () => {
     axios
-      .post(`http://localhost:3000/api/auth/verifytoken`, {
+      .post(`${server}}/api/auth/verifytoken`, {
         token: token,
       })
       .then((response) => {
@@ -39,7 +40,7 @@ export function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/resetpassword`, {
+      const response = await fetch(`${server}/api/auth/resetpassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -14,8 +14,6 @@ export function Profile() {
   const user = useSelector((state) => state.user.value);
   const id = user.id;
 
-
-
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -24,7 +22,6 @@ export function Profile() {
   const [updated, setUpdated] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [preview, setPreview] = useState(null);
-
 
   const user_name = firstname.charAt(0).toUpperCase() +firstname.slice(1);
 
@@ -44,7 +41,7 @@ export function Profile() {
 
   const fetchUser = () => {
     axios
-      .get(`http://localhost:3000/api/users/${user.id}`)
+      .get(`${server}/api/users/${user.id}`)
       .then((response) => {
         console.log("USER RES", response.data.results);
         dispatch(setUser(response.data.results[0]));
@@ -60,7 +57,7 @@ export function Profile() {
 
   const fetchReviews = () => {
     axios
-      .get(`http://localhost:3000/api/users/reviews/${user.id}`)
+      .get(`${server}/api/users/reviews/${user.id}`)
       .then((response) => {
         console.log(response.data.results);
         setReviews(response.data.results);
@@ -73,7 +70,7 @@ export function Profile() {
     e.preventDefault();
 
     axios
-      .put("http://localhost:3000/api/users/update", {
+      .put(`${server}/api/users/update`, {
         firstname,
         lastname,
         country,

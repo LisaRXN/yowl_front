@@ -6,16 +6,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { CategoryFilter } from "../components/categories/CategoryFilter";
 import { CategoryTitle } from "../components/categories/CategoryTitle";
+import { useSelector } from "react-redux";
 
 export function Category_single() {
   const { id } = useParams();
   const [business, setBusiness] = useState(null);
+  const server = useSelector((state)=>state.server.value)
 
   console.log("BUSINES", business);
 
   const fetchCompanies = () => {
     axios
-      .get(`http://localhost:3000/api/business/category/${id}`)
+      .get(`${server}/api/business/category/${id}`)
       .then((response) => {
         if (response.data.results) {
           setBusiness(response.data.results);

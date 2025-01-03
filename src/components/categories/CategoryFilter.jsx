@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { FilterInput } from "../search/FilterInput";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 export function CategoryFilter({setBusiness, id, search}) {
   const [ratingChecked, setRatingChecked] = useState(false);
   const [reviewsChecked, setReviewsChecked] = useState(false);
+  const server = useSelector((state)=>state.server.value)
+  
 
    console.log("SEARCH", search)
 
@@ -13,10 +16,10 @@ export function CategoryFilter({setBusiness, id, search}) {
     setRatingChecked(checked);
     e.preventDefault();
 
-    let url = `http://localhost:3000/api/search/${search}/notation`;
+    let url = `${server}/api/search/${search}/notation`;
 
     if (!checked) {
-      url = `http://localhost:3000/api/business/category/${id}`;
+      url = `${server}/api/business/category/${id}`;
     }
 
     axios
@@ -36,10 +39,10 @@ export function CategoryFilter({setBusiness, id, search}) {
     setReviewsChecked(checked);
     e.preventDefault();
 
-    let url = `http://localhost:3000/api/search/${search}/reviews`;
+    let url = `${server}/api/search/${search}/reviews`;
 
     if (!checked) {
-      url = `http://localhost:3000/api/business/category/${id}`;
+      url = `${server}/api/business/category/${id}`;
     }
 
     axios

@@ -5,20 +5,21 @@ import { LoginTitle } from "../../components/auth/login/LoginTitle";
 import { LoginInputPass } from "../../components/auth/login/LoginInputPass";
 import { LoginInputMail } from "../../components/auth/login/LoginInputMail";
 import { LoginButton } from "../../components/auth/login/LoginButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../store/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 
 export function SendMail() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("")
+  const server = useSelector((state)=>state.server.value)
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/sendtoken`, {
+      const response = await fetch(`${server}/api/auth/sendtoken`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

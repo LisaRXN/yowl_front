@@ -16,10 +16,9 @@ const [business, setBusiness] = useState([])
 
 
 
-
 const fetchBusiness = () => {
     axios
-    .get(`http://localhost:3000/api/business/${business_id}`)
+    .get(`${server}}/api/business/${business_id}`)
     .then((response) => {
       console.log(response.data.results[0]);
       setBusiness(response.data.results[0])

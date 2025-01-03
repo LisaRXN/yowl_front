@@ -17,7 +17,7 @@ export function CommentCreate({user, review_id, fetchComments, setHascomment}) {
 
   const handleSubmit = () => {
     axios
-      .post(`http://localhost:3000/api/comments/create`, {
+      .post(`${server}/api/comments/create`, {
         "user_id": user_id,
         "review_id" : review_id,
         "comment" : newComment

@@ -13,6 +13,7 @@ export function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const email = useSelector((state)=>state.user.value?.email)
+  const server = useSelector((state)=>state.server.value)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -21,7 +22,7 @@ export function Header() {
 
   const handleLogout = () => {
     axios
-    .delete(`http://localhost:3000/api/passport/auth/google/${email}`)
+    .delete(`${server}/api/passport/auth/google/${email}`)
     .then(() => {
        console.log("user logout successfull");
         dispatch(setToken(null));

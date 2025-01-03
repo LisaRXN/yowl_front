@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../../store/userSlice";
 import { setLogin } from "../../store/loginSlice";
@@ -11,18 +11,26 @@ import { LoginTitle } from "../../components/auth/login/LoginTitle";
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const server = useSelector((state)=>state.server.value)
+
+
+    useEffect(() => {
+      setIsLoaded(true);
+    }, []);
+  
+
 
   const googleAuth = ()=> {
-    window.location = "http://localhost:3000/api/passport/auth/google";  // C'est la route où ton backend gère l'authentification Google
+    window.location = `${server}/api/passport/auth/google`;  
   }
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/login`, {
+      const response = await fetch(`${server}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +63,7 @@ export function Login() {
         <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: "url('/img/nuage2.jpg')" }}></div>
       
       <div className="relative w-1/2 max-w-[500px] m-auto">
-      <img src="/img/cat2.png" className=" absolute h-[200px] top-[-100px] left-1/2 transform -translate-x-1/2"></img>
+      <img src="/img/cat2.png" className={`absolute h-[200px] top-[-100px] left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-out ${isLoaded ? "translate-y-0":"translate-y-20"}` }></img>
 
       <form
         onSubmit={handleSubmit}

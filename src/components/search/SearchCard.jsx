@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export function SearchCard({ business }) {
-  const server = useSelector((state) => state.server.value);
   const [rating, setRating] = useState(null);
   const [reviewNumber, setReviewnumber] = useState("");
   const [isLoaded, setIsloaded] = useState(false);
-
+  const server = useSelector((state)=>state.server.value)
   const categoryTitle = business?.category.charAt(0).toUpperCase() + business?.category.slice(1);
 
 
@@ -23,7 +22,7 @@ export function SearchCard({ business }) {
 
   const fetchRating = () => {
     axios
-      .get(`http://localhost:3000/api/business/rating/${business.id}`)
+      .get(`${server}/api/business/rating/${business.id}`)
       .then((response) => {
         if (response.data.results) {
           console.log(response.data.results);

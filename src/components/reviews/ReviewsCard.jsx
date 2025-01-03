@@ -25,11 +25,12 @@ export function ReviewsCard({ business_id, review }) {
   const review_id = review.review_id;
   const token = useSelector((state) => state.user?.token);
   const dispatch = useDispatch()
+  const server = useSelector((state)=>state.server.value)
 
 
   const updateReviewsInRedux = () => {
     axios
-      .get(`http://localhost:3000/api/reviews/${business_id}`)
+      .get(`${server}/api/reviews/${business_id}`)
       .then((response) => dispatch(setReviews(response.data.results)))
       .catch((err) => console.log(err));
   };
@@ -39,7 +40,7 @@ export function ReviewsCard({ business_id, review }) {
     if(user_id){
     axios
       .get(
-        `http://localhost:3000/api/likes/get_likes_user_review/${user_id}/${review_id}`
+        `${server}/api/likes/get_likes_user_review/${user_id}/${review_id}`
       )
       .then((response) => {
         if (response.data.results.length > 0) {
@@ -54,7 +55,7 @@ export function ReviewsCard({ business_id, review }) {
     if(user_id){
     axios
       .get(
-        `http://localhost:3000/api/likes/get_likes_user/${user_id}/${review_id}`
+        `${server}/api/likes/get_likes_user/${user_id}/${review_id}`
       )
       .then((response) => {
         if (response.data.results[0]?.is_liked) {
@@ -70,7 +71,7 @@ export function ReviewsCard({ business_id, review }) {
     if(user_id){
     axios
       .get(
-        `http://localhost:3000/api/comments/get_comment_user_review/${user_id}/${review_id}`
+        `${server}/api/comments/get_comment_user_review/${user_id}/${review_id}`
       )
       .then((response) => {
         if (response.data.results.length > 0) {
@@ -84,7 +85,7 @@ export function ReviewsCard({ business_id, review }) {
 
   const fetchComments = () => {
     axios
-    .get(`http://localhost:3000/api/comments/get_comments_review/${review_id}`)
+    .get(`${server}/api/comments/get_comments_review/${review_id}`)
     .then((response) => {
       if (response.data.results && response.data.results.length > 0) {
         setComments(response.data.results);
@@ -99,7 +100,7 @@ export function ReviewsCard({ business_id, review }) {
 
   const likes_count = () => {
     axios
-      .get(`http://localhost:3000/api/likes/get_likes_review/${review_id}`)
+      .get(`${server}/api/likes/get_likes_review/${review_id}`)
       .then((response) => {
         if (response.data.results && response.data.results.length > 0) {
           setLikes(response.data.results[0].likes_count);
@@ -122,8 +123,8 @@ export function ReviewsCard({ business_id, review }) {
   const updateLike = () => {
     const newLikeStatus = !hasLiked;
     const url = isLikeCreated
-      ? `http://localhost:3000/api/likes/update`
-      : "http://localhost:3000/api/likes/create";
+      ? `${server}/api/likes/update`
+      : "${server}/api/likes/create";
 
     axios
       .post(url, {
@@ -158,8 +159,8 @@ export function ReviewsCard({ business_id, review }) {
     setDislikes((prev) => (newDislikeStatus ? prev + 1 : prev - 1));
 
     const url = isLikeCreated
-      ? `http://localhost:3000/api/likes/update`
-      : `http://localhost:3000/api/likes/create`;
+      ? `${server}/api/likes/update`
+      : `${server}/api/likes/create`;
 
     axios
       .put(url, {
@@ -187,7 +188,7 @@ export function ReviewsCard({ business_id, review }) {
         <div className="flex flex-col md:flex-row flex-row gap-5 md:gap-10 w-full">
           <ReviewCardUser review={review} />
 
-          <div className="flex flex-col gap-2 w-2/3">
+          <div className="flex flex-col gap-2 w-2/3 ">
             <div className="flex gap-4 items-center">
               <ReactStars
                 key = {review_id}
@@ -217,11 +218,12 @@ export function ReviewsCard({ business_id, review }) {
             }
 
             {openComment && (
-              <div className="flex flex-col gap-5 ">
+              <div className="flex flex-col gap-5">
+                <div className="max-h-[300px] overflow-y-scroll">
                 {comments?.map((item, index) => (
                   <ReviewComment key={index} comment={item} />
                 ))}
-
+                </div>
                 <CommentCreate hasComment={hasComment} comment={comment} user={user} review_id={review_id} fetchComments={fetchComments} setHascomment={setHascomment} />
               </div>
             )}
@@ -231,26 +233,3 @@ export function ReviewsCard({ business_id, review }) {
     </div>
   );
 }
-
-// const handleDislike = async () => {
-//   const newDislikes = hasDisliked ? dislike - 1 : dislike + 1;
-//   const newLikes = hasLiked ? like - 1 : like;
-
-//   setDislike(newDislikes);
-//   setHasDisliked(!hasDisliked);
-//   if (hasLiked) {
-//     setLike(newLikes);
-//     setHasLiked(false);
-//   }
-//   axios
-//     .put(`http://localhost:3000/api/reviews/likes`, {
-//       id: review.review_id,
-//       likes: newLikes,
-//       dislikes: newDislikes,
-//     })
-//     .then(() => {
-//       console.log("Review updated successfully!");
-//       updateReviewsInRedux();
-//     })
-//     .catch((err) => console.log(err));
-// };

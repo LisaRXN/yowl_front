@@ -8,11 +8,12 @@ export function LastReviews({ id }) {
   const navigate = useNavigate();
   const server = useSelector((state)=>state.server.value)
 
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/reviews/last/${id}`
+          `${server}/api/reviews/last/${id}`
         );
 
         if (!response.ok) {

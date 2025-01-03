@@ -31,7 +31,7 @@ export function ReviewForm({ id }){
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = `http://localhost:3000/api/reviews/${id}`
+    const url = `${server}/api/reviews/${id}`
     axios
     .post(url, {
       rating: rating,

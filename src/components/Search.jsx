@@ -4,10 +4,12 @@ import { SearchCard } from "./search/SearchCard";
 import { SearchFilters } from "./search/SearchFilters";
 import axios from "axios";
 import { SearchBar } from "./search/SearchBar";
+import { useSelector } from "react-redux";
 
 export function Search() {
   const [search, setSearch] = useState("");
   const [business, setBusiness] = useState(null);
+  const server = useSelector((state)=>state.server.value)
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -19,7 +21,7 @@ export function Search() {
       return;
     }
     axios
-      .get(`http://localhost:3000/api/search/${search}`)
+      .get(`${server}/api/search/${search}`)
       .then((response) => setBusiness(response.data.results))
       .catch((err) => console.log(err));
   }, [search]);
@@ -56,30 +58,3 @@ export function Search() {
     </>
   );
 }
-
-// useEffect(() => {
-//   const fetchBusiness = async () => {
-//     if (search.trim() === null) {
-//       setBusiness([]);
-//       return;
-//     }
-
-//     try {
-//       const response = await fetch(
-//         `http://localhost:3000/api/search/${search}`
-//       );
-
-//       if (!response.ok) {
-//         console.error("Erreur lors de la requête");
-//         return;
-//       }
-//       const data = await response.json();
-//       setBusiness(data.results);
-
-//     } catch (error) {
-//       console.error("Erreur réseau :", error);
-//     }
-//   };
-
-//   fetchBusiness();
-// }, [search]);

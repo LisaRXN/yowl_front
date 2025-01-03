@@ -5,7 +5,7 @@ import { ReviewCreate } from "../components/reviews/ReviewCreate";
 import { ReviewsCard } from "../components/reviews/ReviewsCard";
 import { RatingCard } from "../components/rating/RatingCard";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export function Business() {
   const { id } = useParams();
@@ -15,15 +15,17 @@ export function Business() {
   const [rating, setRating] = useState(null);
   const [reviewsFiltered, setReviewsFiltered] = useState(reviews);
   const dispatch = useDispatch()
+  const server = useSelector((state)=>state.server.value)
+  
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/business/${id}`)
+      .get(`${server}/api/business/${id}`)
       .then((response) => setBusiness(response.data.results[0]))
       .catch((err) => console.log(err));
     
     axios
-      .get(`http://localhost:3000/api/business/rating/${id}`)
+      .get(`${server}/api/business/rating/${id}`)
       .then((response) => {
         setRating(response.data.results[0].rating);
         setReviewsNumber(response.data.results[0].reviews_number);
@@ -31,7 +33,7 @@ export function Business() {
       .catch((err) => console.log(err));
 
     axios
-      .get(`http://localhost:3000/api/reviews/${id}`)
+      .get(`${server}/api/reviews/${id}`)
       .then((response) => {
         const results = response.data.results;
         setReviews(results);
@@ -79,46 +81,3 @@ export function Business() {
     <div>Loading...</div>
   );
 }
-
-//   const fetchData = async () => {
-//     try {
-//       //business
-//       const businessResponse = await fetch(
-//         `http://localhost:3000/api/business/${id}`
-//       );
-//       if (!businessResponse.ok) {
-//         throw new Error(
-//           "Erreur lors de la récupération des données business"
-//         );
-//       }
-//       const businessData = await businessResponse.json();
-//       setBusiness(businessData.results[0]);
-
-//       //rating
-//       const ratingResponse = await fetch(
-//         `http://localhost:3000/api/business/rating/${id}`
-//       );
-//       if (!ratingResponse.ok) {
-//         throw new Error("Erreur lors de la récupération des données rating");
-//       }
-//       const ratingData = await ratingResponse.json();
-//       dispatch(setRating(ratingData.results[0].rating));
-//       setReviewsNumber(ratingData.results[0].reviews_number);
-
-//       //reviews
-//       const reviewsResponse = await fetch(
-//         `http://localhost:3000/api/reviews/${id}`
-//       );
-//       if (!reviewsResponse.ok) {
-//         throw new Error("Erreur lors de la récupération des données reviews");
-//       }
-//       const reviewsData = await reviewsResponse.json();
-//       console.log(reviewsData.results.length);
-//       dispatch(setReviews(reviewsData.results));
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   fetchData();
-// }, [id, dispatch]);

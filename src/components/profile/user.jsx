@@ -1,6 +1,6 @@
 import { RegisterInput } from "../auth/register/RegisterInput";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../store/userSlice";
 import { setLogin } from "../../store/loginSlice";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,11 +22,13 @@ export function user(){
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const server = useSelector((state)=>state.server.value)
   
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const response = await fetch(`http://localhost:3000/api/auth/register`, {
+        const response = await fetch(`${server}/api/auth/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
