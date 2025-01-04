@@ -44,7 +44,6 @@ function Main() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/business/:id" element={<Business />} />
-        {/* <Route path="/review/:id" element={<Review />} /> */}
         <Route path="/category/:id" element={<Category_single />} />
         <Route path="/categories" element={<Categories_page />} />
         <Route path="/writereview" element={<WriteReview />} />
