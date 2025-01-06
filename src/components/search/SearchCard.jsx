@@ -4,20 +4,26 @@ import ReactStars from "react-rating-stars-component";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import uniqid from 'uniqid';
 
-export function SearchCard({ business }) {
+
+export function SearchCard({ business, search}) {
   const [rating, setRating] = useState(null);
   const [reviewNumber, setReviewnumber] = useState("");
   const [isLoaded, setIsloaded] = useState(false);
   const server = useSelector((state)=>state.server.value)
   const categoryTitle = business?.category.charAt(0).toUpperCase() + business?.category.slice(1);
+  const uniqueId = uniqid();
 
-
-  let business_image;
-  if (business.image.startsWith("http")) {
-    business_image = business.image;
-  } else {
-    business_image = server + business.image;
+  let business_image
+  if(business.image){
+    if (business.image.startsWith("http")) {
+      business_image = business.image;
+    } else {
+      business_image = server + business.image;
+    }
+  }else{
+    business_image = "/icon/upload.png"
   }
 
   const fetchRating = () => {
@@ -36,7 +42,7 @@ export function SearchCard({ business }) {
 
   useEffect(() => {
     fetchRating();
-  }, [business]);
+  }, [search, business, rating]);
 
   return (
     isLoaded && (
@@ -45,11 +51,12 @@ export function SearchCard({ business }) {
         {/* left  */}
         <div className="relative flex flex-col w-full md:w-1/2 h-1/2 md:h-full p-5 gap-2 ">
           
-          <div className="flex items-start gap-5 ">
-            <div className="h-[100px] w-[100px] rounded-md ">
+          <div className="flex items-start gap-5">
+            <div className="h-[100px] w-[100px] min-h-[100px] min-w-[100px] rounded-md">
               <img
                 // src={`${server}${business.image}`}
                 src={business_image}
+                // src={business?.image.startsWith("http") ? business?.image : server + business.image}
                 className="h-full w-auto object-cover rounded-md"
               ></img>
             </div>
@@ -61,6 +68,7 @@ export function SearchCard({ business }) {
                 {business.name}
               </Link>
               <ReactStars
+                key={uniqueId}
                 edit={false}
                 count={5}
                 size={24}

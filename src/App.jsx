@@ -30,9 +30,9 @@ function App() {
 
 function Main() {
   const location = useLocation();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // dispatch(setServer("http://localhost:3000"));
+  dispatch(setServer("http://localhost:3000"));
   // dispatch(setServer("https://yowl-backend-pgxt.onrender.com"));
 
   return (

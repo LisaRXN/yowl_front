@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     value: [],
     token: null,
-    
+    googleUser: false
 }
 
 const userSlice = createSlice({
@@ -17,9 +17,12 @@ const userSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    setGoogleUser: (state, action) => {
+      state.googleUser = action.payload;
+    },
   },
 });
 
-export const { setUser, setToken} = userSlice.actions;
+export const { setUser, setToken, setGoogleUser} = userSlice.actions;
 
 export default userSlice.reducer;

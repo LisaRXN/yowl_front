@@ -117,14 +117,14 @@ export function ReviewsCard({ business_id, review }) {
     isLikeInDatabase();
     fetchComments();
     reviewIsCommented()
-  }, [business_id, user_id]);
+  }, [business_id, user_id, isLikeCreated]);
 
 
   const updateLike = () => {
     const newLikeStatus = !hasLiked;
     const url = isLikeCreated
       ? `${server}/api/likes/update`
-      : "${server}/api/likes/create";
+      : `${server}/api/likes/create`;
 
     axios
       .post(url, {

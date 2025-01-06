@@ -44,12 +44,12 @@ export function LastReviews({ id }) {
               <div className="flex items-center gap-2 pb-2 w-full">
                 <div className="h-[40px] w-[40px] rounded-full overflow-hidden">
                   <img
-                    // src={`${server}${review.avatar}`}
-                    src={review.avatar}
+                    src={review?.avatar.startsWith("http") ? review.avatar : server + review.avatar }
                     className="object-contain h-fit w-fit"
                   ></img>
                 </div>
                 <ReactStars
+                  key={review.id}
                   onChange={()=>{}}
                   edit={false}
                   count={5}

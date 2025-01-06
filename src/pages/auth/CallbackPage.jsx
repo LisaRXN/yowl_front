@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken, setUser } from "../../store/userSlice";
+import { setGoogleUser, setToken, setUser } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../store/loginSlice";
 import { useEffect } from "react";
@@ -21,6 +21,7 @@ export function CallbackPage() {
           console.log("user login successfull");
           dispatch( setUser({id : response.data.results[0].id, email: email}));
           dispatch( setToken(token));
+          dispatch( setGoogleUser(true))
           dispatch( setLogin(true));
           navigate("/home");
         } else {

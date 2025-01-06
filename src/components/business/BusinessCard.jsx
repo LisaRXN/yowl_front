@@ -2,15 +2,18 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RatingBar } from "../rating/RatingBar";
 import ReactStars from "react-rating-stars-component";
+import uniqid from 'uniqid';
 
 export function BusinessCard({ business, rating, reviewsNumber, reviews }) {
   const server = useSelector((state)=>state.server.value)
+  const uniqueId = uniqid();
+
 
   let business_image;
-  if (business.image.startsWith("http")) {
-    business_image = business.image;
+  if (business?.image.startsWith("http")) {
+    business_image = business?.image;
   } else {
-    business_image = server + business.image;
+    business_image = server + business?.image;
   }
 
   return (
@@ -48,11 +51,12 @@ export function BusinessCard({ business, rating, reviewsNumber, reviews }) {
               {Math.round(rating*10)/10}
             </span>
             <ReactStars
+              key={uniqueId}
               edit={false}
               count={5}
               size={24}
               activeColor="#ffd700"
-              value={rating ? rating : null}
+              value={rating}
             />
             <span>{reviewsNumber} reviews</span>
           </div>

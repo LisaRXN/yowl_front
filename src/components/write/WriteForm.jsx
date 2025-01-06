@@ -57,7 +57,7 @@ export function WriteForm() {
       return;
     }
 
-    const url = `${server}}/api/business`;
+    const url = `${server}/api/business`;
     axios
       .post(url, {
         name: name,
@@ -91,15 +91,15 @@ export function WriteForm() {
         
       })
       .catch((err) => {
-        console.log("Error: " + err.message, err.response.data);
-        setError(err.response.data.error)
+        console.log("Error: " + err.message, err);
+        setError(err.message)
       });
   };
 
   return (
     <>
     {success && 
-    <div className="flex flex-col items-center md:p-20 py-[50px] md:py-[100px] gap-10 bg-pink-200 m-auto">
+    <div className="flex flex-col items-center md:p-20 py-[50px] md:py-[100px] gap-10 m-auto">
      <span className="text-lg">{success}</span>
      <Link to="/home" className="underline">Back to Home Page</Link>
     </div>

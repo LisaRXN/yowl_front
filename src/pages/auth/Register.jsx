@@ -23,10 +23,8 @@ export function Register() {
   const navigate = useNavigate();
   const server = useSelector((state)=>state.server.value)
 
-  console.log(avatar)
+console.log(firstname, lastname, country, email, password)
   const handleSubmit = async (e) => {
-    console.log(avatar)
-
     e.preventDefault();
     try {
       const response = await fetch(`${server}/api/auth/register`, {
@@ -45,29 +43,19 @@ export function Register() {
         }),
       });
 
-      if (response.ok) {
-        console.log("Login successfull!");
-        const data = await response.json();
-        dispatch(setUser(data.user));
-        dispatch(setToken(data.token));
+
+      if (response) {
+        console.log("Register successfull!");
         navigate("/auth/login");
       } else {
         setPassword("");
-        console.log("Failed to login.");
+        console.log("Failed to register.");
       }
     } catch (error) {
       console.log("Error: " + error.message);
     }
   };
 
-
-  const googleAuth = ()=> {
-    window.location = `${server}/api/passport/auth/google`;  // C'est la route où ton backend gère l'authentification Google
-  }
-
-  
-
- 
 
 
   return (
@@ -102,9 +90,16 @@ export function Register() {
 
         <LoginInputPass password={password} setPassword={setPassword} />
 
-        <LoginButton googleAuth={googleAuth} />
+        <button
+        type="submit"
+        className="text-white  mt-5 bg-slate-800 w-full rounded-xl px-4 py-2 hover:bg-indigo-800 "
+      >
+        Get Started
+      </button>
 
-        <div className="flex gap-2 items-center justify-center text-slate-800 w-full pt-10 "><span>Don{"'"}t have an account?</span><Link to="/register" className="font-bold">Sign Up</Link></div>
+        {/* <LoginButton googleAuth={googleAuth} /> */}
+
+        <div className="flex gap-2 items-center justify-center text-slate-800 w-full pt-10 "><span>Already have an account?</span><Link to="/auth/login" className="font-bold">Sign In</Link></div>
         
       </form>
 

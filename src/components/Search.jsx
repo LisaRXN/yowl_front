@@ -47,7 +47,7 @@ export function Search() {
             <div className=" flex flex-col gap-20 w-full items-center ">
 
             {business.map((b, index) => (
-              <SearchCard key={index} business={b}/>
+              <SearchCard key={index} business={b} search={search}/>
             ))}
 
             </div>

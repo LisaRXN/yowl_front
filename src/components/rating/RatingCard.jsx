@@ -18,7 +18,7 @@ export function RatingCard({ business_id, reviewsNumber, setReviewsFiltered, rat
               count={5}
               size={24}
               activeColor="#ffd700"
-              value={rating ? rating : null}
+              value={rating}
             />
             <span>{reviewsNumber} reviews</span>
           </div>
