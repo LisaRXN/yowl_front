@@ -12,7 +12,7 @@ export function Profile() {
   const dispatch = useDispatch();
   const server = useSelector((state) => state.server.value);
   const user = useSelector((state) => state.user.value);
-  const id = user.id;
+  const id = user?.id;
 
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -23,7 +23,7 @@ export function Profile() {
   const [reviews, setReviews] = useState([]);
   const [preview, setPreview] = useState(null);
 
-  const user_name = firstname.charAt(0).toUpperCase() +firstname.slice(1);
+  const user_name = firstname?.charAt(0).toUpperCase() +firstname.slice(1);
 
   let user_avatar;
   if (avatar?.startsWith("http")) {
@@ -34,14 +34,16 @@ export function Profile() {
 
   
   useEffect(() => {
+    if (user) {
     fetchUser();
     fetchReviews();
+    }
   }, []);
 
 
   const fetchUser = () => {
     axios
-      .get(`${server}/api/users/${user.id}`)
+      .get(`${server}/api/users/${user?.id}`)
       .then((response) => {
         console.log("USER RES", response.data.results);
         dispatch(setUser(response.data.results[0]));
@@ -88,7 +90,9 @@ export function Profile() {
       });
   };
 
+
   return (
+
     <div className="flex flex-col gap-10 items-start p-10 md:py-20 justify-start min-h-screen bg-slate-600">
       <form
         onSubmit={handleSubmit}
@@ -159,9 +163,11 @@ export function Profile() {
 
       <div className="relative flex flex-col items-center gap-4 flex-between overflow-y-scroll w-3/4">
         {reviews?.map((review, index) => (
-          <UserReviewsCard key={index} review={review} />
+          <UserReviewsCard key={index} review={review} fetchReviews={fetchReviews} />
         ))}
+        
       </div>
     </div>
+
   );
 }

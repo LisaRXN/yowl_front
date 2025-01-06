@@ -7,6 +7,7 @@ import axios from "axios";
 
 export function ReviewForm({ id }){
 
+  const server = useSelector((state) => state.server.value);
   const [rating, setRating] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
