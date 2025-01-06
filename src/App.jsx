@@ -32,8 +32,8 @@ function Main() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  dispatch(setServer("http://localhost:3000"));
-  // dispatch(setServer("https://yowl-backend-pgxt.onrender.com"));
+  // dispatch(setServer("http://localhost:3000"));
+  dispatch(setServer("https://yowl-api-lisa-eriksens-projects.vercel.app"));
 
   return (
     <div className="bg-slate-100 min-h-screen text-gray-800">
