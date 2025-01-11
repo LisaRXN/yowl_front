@@ -131,7 +131,6 @@ export function ReviewsCard({ business_id, review }) {
         user_id,
         review_id,
         is_liked: newLikeStatus,
-        is_disliked: hasDisliked,
       })
       .then(() => {
         console.log("Like créé avec succès !");
@@ -166,8 +165,7 @@ export function ReviewsCard({ business_id, review }) {
       .put(url, {
         user_id: user_id,
         review_id: review_id,
-        is_liked: hasLiked,
-        is_disliked: newDislikeStatus,
+        is_liked: hasLiked
       })
       .then(() => {
         console.log("Review updated successfully!");
