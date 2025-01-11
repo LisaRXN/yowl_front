@@ -15,16 +15,16 @@ export function SearchCard({ business, search}) {
   const categoryTitle = business?.category.charAt(0).toUpperCase() + business?.category.slice(1);
   const uniqueId = uniqid();
 
-  let business_image
-  if(business.image){
-    if (business.image.startsWith("http")) {
-      business_image = business.image;
-    } else {
-      business_image = server + business.image;
-    }
-  }else{
-    business_image = "/icon/upload.png"
-  }
+  // let business_image
+  // if(business.image){
+  //   if (business.image.startsWith("http")) {
+  //     business_image = business.image;
+  //   } else {
+  //     business_image = server + business.image;
+  //   }
+  // }else{
+  //   business_image = "/icon/upload.png"
+  // }
 
   const fetchRating = () => {
     axios
@@ -55,8 +55,9 @@ export function SearchCard({ business, search}) {
             <div className="h-[100px] w-[100px] min-h-[100px] min-w-[100px] rounded-md">
               <img
                 // src={`${server}${business.image}`}
-                src={business_image}
-                // src={business?.image.startsWith("http") ? business?.image : server + business.image}
+                // src={business_image}
+                src={business?.image.startsWith("http") ? business.image : server + business.image}
+                // src={business.image}
                 className="h-full w-auto object-cover rounded-md"
               ></img>
             </div>

@@ -18,15 +18,17 @@ export function ResetPassword() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const server = useSelector((state)=>state.server.value)
-
+  const [email, setEmail] = useState("")
 
   const verifyToken = () => {
     axios
-      .post(`${server}}/api/auth/verifytoken`, {
+      .post(`${server}/api/auth/verifytoken`, {
         token: token,
       })
       .then((response) => {
+        console.log(response.message)
         console.log(response.data.results.email);
+        setEmail(response.data.results.email)
       })
       .catch((err) => console.log(err));
   };
@@ -36,31 +38,48 @@ export function ResetPassword() {
   }, []);
 
 
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`${server}/api/auth/resetpassword`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password,
-          confirmPassword
-        }),
-      });
-
-      if (response.ok) {
+    axios
+      .post(`${server}/api/auth/resetpassword`, {
+        password: password,
+        confirmPassword: confirmPassword,
+        email: email
+      })
+      .then((response) => {
+        console.log(response.message)
         navigate("/auth/login");
-      } else {
-        setPassword("");
-        console.log("Failed to login.");
-      }
-    } catch (error) {
-      console.log("Error: " + error.message);
-    }
+
+      })
+      .catch((err) => console.log(err));
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     console.log(password, confirmPassword)
+  //     const response = await fetch(`${server}/api/auth/resetpassword`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         password,
+  //         confirmPassword
+  //       }),
+  //     });
+
+  //     if (response) {
+  //       console.log(response)
+  //       navigate("/auth/login");
+  //     } else {
+  //       setPassword("");
+  //       console.log("Failed to login.");
+  //     }
+  //   } catch (error) {
+  //     console.log("Error: " + error.message);
+  //   }
+  // };
 
   return (
     !login && (

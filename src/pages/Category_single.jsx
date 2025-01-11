@@ -48,7 +48,7 @@ export function Category_single() {
 
         <div className="md:w-3/4 md:py-20 ">
           <div className=" flex flex-col gap-10 md:gap-20 w-full items-center   ">
-            {business.map((b, index) => (
+            {business?.map((b, index) => (
               <SearchCard
                 key={index}
                 business={b}

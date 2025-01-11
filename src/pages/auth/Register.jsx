@@ -36,7 +36,8 @@ console.log(firstname, lastname, country, email, password)
           firstname:firstname,
           lastname:lastname,
           country:country,
-          avatar:avatar,
+          // avatar:avatar,
+          avatar:null,
           email: email,
           password: password,
           role:0
