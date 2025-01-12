@@ -217,11 +217,13 @@ export function ReviewsCard({ business_id, review }) {
 
             {openComment && (
               <div className="flex flex-col gap-5">
+              {comments?.length > 0 && (
                 <div className="max-h-[300px] overflow-y-scroll">
                 {comments?.map((item, index) => (
                   <ReviewComment key={index} comment={item} />
                 ))}
                 </div>
+              )}
                 <CommentCreate hasComment={hasComment} comment={comment} user={user} review_id={review_id} fetchComments={fetchComments} setHascomment={setHascomment} />
               </div>
             )}
