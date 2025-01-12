@@ -8,10 +8,10 @@ export function CommentCreate({user, review_id, fetchComments, setHascomment}) {
   const [newComment, setNewcomment] = useState('')
   const server = useSelector((state)=> state.server.value)
 
-  let user_avatar;
-  if (user?.avatar.startsWith("http")) {
+  let user_avatar = "/img/users/avatar.png";
+  if (user && user.avatar && user.avatar.startsWith("http")) {
     user_avatar = user.avatar;
-  } else if(user?.avatar.startsWith("/images")){
+  } else if (user && user.avatar && user.avatar.startsWith("/images")) {
     user_avatar = server + user.avatar;
   }
 

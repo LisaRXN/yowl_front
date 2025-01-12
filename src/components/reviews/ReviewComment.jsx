@@ -4,10 +4,10 @@ export function ReviewComment({ comment }) {
 
   const server = useSelector((state)=>state.server.value)
 
-  let user_avatar;
-  if (comment?.avatar.startsWith("http")) {
-    user_avatar = comment.avatar;
-  } else if(comment?.avatar.startsWith("/images")){
+  let user_avatar = "/img/users/avatar.png"; 
+  if (comment && comment.avatar && comment.avatar.startsWith("http")) {
+    user_avatar = comment.avatar; 
+  } else if (comment && comment.avatar && comment.avatar.startsWith("/images")) {
     user_avatar = server + comment.avatar;
   }
 
